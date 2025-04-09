@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c26lri35mtwbc"]
+
+[ext_resource type="PackedScene" uid="uid://boph7exxv3mcm" path="res://scenes/fade.tscn" id="1_geobj"]
+[ext_resource type="Texture2D" uid="uid://bas4y1p0spcfq" path="res://assets/player.png" id="2_nk8it"]
+
+[node name="dash_ghost" instance=ExtResource("1_geobj")]
+fade_time = 1.0
+delete = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_nk8it")

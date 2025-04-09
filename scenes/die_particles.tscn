@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4vpl7yj4k1hq"]
+
+[ext_resource type="Script" uid="uid://coywa67303rrb" path="res://scripts/particles.gd" id="1_vx451"]
+[ext_resource type="PackedScene" uid="uid://jh83fenhjvsy" path="res://scenes/ring_effect.tscn" id="2_e3g1i"]
+
+[sub_resource type="Curve" id="Curve_m5f3k"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.792373, 0.993036), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="die_particles" type="CPUParticles2D"]
+emitting = false
+amount = 6
+lifetime = 0.75
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 300.0
+initial_velocity_max = 600.0
+angular_velocity_min = 100.0
+angular_velocity_max = 300.0
+damping_min = 600.0
+damping_max = 600.0
+angle_max = 360.0
+scale_amount_min = 10.0
+scale_amount_max = 25.0
+scale_amount_curve = SubResource("Curve_m5f3k")
+script = ExtResource("1_vx451")
+
+[node name="ring_effect" parent="." instance=ExtResource("2_e3g1i")]
+
+[connection signal="finished" from="." to="." method="_on_finished"]

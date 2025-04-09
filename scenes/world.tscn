@@ -1,3 +1,21 @@
-[gd_scene format=3 uid="uid://o4maif022yrb"]
+[gd_scene load_steps=4 format=3 uid="uid://o4maif022yrb"]
+
+[ext_resource type="PackedScene" uid="uid://d0k5mnbjggsxq" path="res://scenes/player.tscn" id="1_nnsk1"]
+[ext_resource type="PackedScene" uid="uid://cail1nhbrwdif" path="res://scenes/camera.tscn" id="2_rwgxs"]
+[ext_resource type="Texture2D" uid="uid://byrqylg5d30bj" path="res://icon.svg" id="3_4wyf3"]
 
 [node name="world" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("1_nnsk1")]
+position = Vector2(153, 89)
+
+[node name="camera" parent="." instance=ExtResource("2_rwgxs")]
+position = Vector2(213, 120)
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(62, 198)
+texture = ExtResource("3_4wyf3")
+
+[node name="Icon2" type="Sprite2D" parent="."]
+position = Vector2(362, 92)
+texture = ExtResource("3_4wyf3")

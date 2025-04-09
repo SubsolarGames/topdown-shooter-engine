@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://blnospp0aw84v"]
+
+[ext_resource type="Script" uid="uid://b3bcd523lixwo" path="res://scripts/healthbox.gd" id="1_547a3"]
+[ext_resource type="PackedScene" uid="uid://b4vpl7yj4k1hq" path="res://scenes/die_particles.tscn" id="2_sv1ob"]
+
+[node name="healthbox" type="Area2D"]
+script = ExtResource("1_547a3")
+particle_scene = ExtResource("2_sv1ob")

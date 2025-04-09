@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cu2l7rfmj5aeb"]
+
+[ext_resource type="Script" uid="uid://dmvbcmmjvkh3w" path="res://scripts/moveable.gd" id="1_jfuc4"]
+
+[node name="moveable" type="CharacterBody2D"]
+script = ExtResource("1_jfuc4")

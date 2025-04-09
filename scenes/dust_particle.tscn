@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgp7fiqs72dqk"]
+
+[sub_resource type="Curve" id="Curve_lpi7k"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.802875, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_lpi7k"]
+offsets = PackedFloat32Array(0.549894, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="dust_particle" type="CPUParticles2D"]
+emitting = false
+gravity = Vector2(0, 0)
+angle_max = 360.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_lpi7k")
+color = Color(0.545098, 0.607843, 0.705882, 1)
+color_ramp = SubResource("Gradient_lpi7k")
