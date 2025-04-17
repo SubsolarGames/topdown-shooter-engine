@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://baqqse1b8oa8g"]
+
+[ext_resource type="PackedScene" uid="uid://dyulppcn6fm7h" path="res://scenes/cursor.tscn" id="1_nt7q6"]
+
+[node name="ui" type="CanvasLayer"]
+
+[node name="cursor" parent="." instance=ExtResource("1_nt7q6")]

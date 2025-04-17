@@ -6,3 +6,5 @@
 [node name="healthbox" type="Area2D"]
 script = ExtResource("1_547a3")
 particle_scene = ExtResource("2_sv1ob")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

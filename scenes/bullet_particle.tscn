@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3xas6plm47tt"]
+
+[ext_resource type="Texture2D" uid="uid://cb1bb2rcmroq7" path="res://assets/triangle_particle.png" id="1_qfuck"]
+[ext_resource type="Script" uid="uid://coywa67303rrb" path="res://scripts/particles.gd" id="2_nm6xd"]
+
+[sub_resource type="Curve" id="Curve_qfuck"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.743644, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="bullet_particle" type="CPUParticles2D"]
+emitting = false
+amount = 3
+texture = ExtResource("1_qfuck")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+direction = Vector2(-1, 0)
+gravity = Vector2(0, 0)
+initial_velocity_min = 60.0
+initial_velocity_max = 75.0
+angular_velocity_min = 50.0
+angular_velocity_max = 50.0
+damping_min = 100.0
+damping_max = 100.0
+angle_max = 360.0
+scale_amount_min = 0.02
+scale_amount_max = 0.06
+scale_amount_curve = SubResource("Curve_qfuck")
+color = Color(0.996078, 0.905882, 0.380392, 1)
+script = ExtResource("2_nm6xd")

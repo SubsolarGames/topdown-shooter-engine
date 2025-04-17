@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d0k5mnbjggsxq"]
+[gd_scene load_steps=16 format=3 uid="uid://d0k5mnbjggsxq"]
 
 [ext_resource type="PackedScene" uid="uid://cu2l7rfmj5aeb" path="res://scenes/moveable.tscn" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://b4pvms8nymcbx" path="res://scripts/player.gd" id="1_qlg0r"]
@@ -9,7 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://bgp7fiqs72dqk" path="res://scenes/dust_particle.tscn" id="6_tuyoq"]
 [ext_resource type="PackedScene" uid="uid://c47821j3o5p7c" path="res://scenes/spawner.tscn" id="7_fjrip"]
 [ext_resource type="PackedScene" uid="uid://c26lri35mtwbc" path="res://scenes/dash_ghost.tscn" id="8_smehm"]
+[ext_resource type="PackedScene" uid="uid://dftbsa22gir2b" path="res://scenes/hit_particles.tscn" id="9_3v2ag"]
 [ext_resource type="PackedScene" uid="uid://dx137s8qt5iyj" path="res://scenes/dash_particle.tscn" id="9_ur7pv"]
+[ext_resource type="PackedScene" uid="uid://2k48cnlhg4hd" path="res://scenes/gun.tscn" id="11_d2wvv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d2wvv"]
 resource_local_to_scene = true
@@ -20,7 +22,11 @@ shader_parameter/active = false
 radius = 3.0
 height = 14.0
 
-[node name="player" type="Node2D" node_paths=PackedStringArray("moveable", "animated_character", "dust_particle", "spawner", "dash_particle", "healthbox")]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4r1p"]
+radius = 3.0
+height = 14.0
+
+[node name="player" type="Node2D" node_paths=PackedStringArray("moveable", "animated_character", "dust_particle", "spawner", "dash_particle", "healthbox", "gun")]
 z_index = 10
 script = ExtResource("1_qlg0r")
 moveable = NodePath("moveable")
@@ -29,6 +35,7 @@ dust_particle = NodePath("dust_particle")
 spawner = NodePath("spawner")
 dash_particle = NodePath("dash_particle")
 healthbox = NodePath("healthbox")
+gun = NodePath("gun")
 
 [node name="dust_particle" parent="." instance=ExtResource("6_tuyoq")]
 position = Vector2(0, 6)
@@ -48,9 +55,10 @@ texture = ExtResource("3_dqkch")
 moveable = NodePath("../moveable")
 
 [node name="moveable" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("1_3vyb7")]
+collision_mask = 18
 entity = NodePath("..")
 speed = 125.0
-accel = 12.0
+accel = 15.0
 friction = 15.0
 dash_speed = 500.0
 
@@ -58,6 +66,8 @@ dash_speed = 500.0
 shape = SubResource("CapsuleShape2D_dqkch")
 
 [node name="healthbox" parent="." node_paths=PackedStringArray("entity", "sprite") instance=ExtResource("3_qhqgy")]
+collision_layer = 0
+collision_mask = 8
 entity = NodePath("..")
 sprite = NodePath("../animated_character")
 health = 100.0
@@ -66,8 +76,11 @@ screenshake_duration = 0.2
 frame_freeze_duration = 0.2
 die_effect_mul = 2.0
 particle_scale = 0.5
+hit_particle_scale = 0.5
+hit_particle_scene = ExtResource("9_3v2ag")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="healthbox"]
+shape = SubResource("CapsuleShape2D_y4r1p")
 
 [node name="spawner" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("7_fjrip")]
 entity = NodePath("..")
@@ -76,3 +89,7 @@ obj = ExtResource("8_smehm")
 [node name="spawn_dash_ghost" type="Timer" parent="."]
 wait_time = 0.05
 one_shot = true
+
+[node name="gun" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("11_d2wvv")]
+entity = NodePath("..")
+bullets = 1

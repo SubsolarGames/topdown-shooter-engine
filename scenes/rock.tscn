@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://bd57lne5ya8gn"]
+
+[ext_resource type="PackedScene" uid="uid://cu2l7rfmj5aeb" path="res://scenes/moveable.tscn" id="1_1di36"]
+[ext_resource type="Material" uid="uid://gkpv3mdq56sj" path="res://white.tres" id="1_ik6fu"]
+[ext_resource type="Texture2D" uid="uid://dvrh1y0s6nhou" path="res://assets/rock.png" id="2_872ht"]
+[ext_resource type="PackedScene" uid="uid://blnospp0aw84v" path="res://scenes/healthbox.tscn" id="2_mek2u"]
+[ext_resource type="PackedScene" uid="uid://dftbsa22gir2b" path="res://scenes/hit_particles.tscn" id="5_p2d0s"]
+
+[node name="rock" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("1_ik6fu")
+texture = ExtResource("2_872ht")
+
+[node name="moveable" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("1_1di36")]
+collision_layer = 16
+collision_mask = 0
+entity = NodePath("..")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="moveable"]
+polygon = PackedVector2Array(7, 7, -7, 7, -7, -1, -3, -4, 0, -4, 7, 0)
+
+[node name="healthbox" parent="." node_paths=PackedStringArray("entity", "sprite") instance=ExtResource("2_mek2u")]
+collision_layer = 0
+collision_mask = 4
+entity = NodePath("..")
+sprite = NodePath("../Sprite2D")
+health = 5.0
+screenshake_hit = 1.0
+screenshake_duration = 0.2
+frame_freeze_duration = 0.05
+die_effect_mul = 1.5
+particle_scale = 0.2
+hit_particle_scale = 0.2
+hit_particle_scene = ExtResource("5_p2d0s")
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="healthbox"]
+polygon = PackedVector2Array(7, 7, -7, 7, -7, -1, -3, -4, 0, -4, 7, 0)

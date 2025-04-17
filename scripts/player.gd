@@ -7,6 +7,7 @@ extends Node2D
 @export var spawner: Spawner
 @export var dash_particle: CPUParticles2D
 @export var healthbox: HealthBox
+@export var gun: Gun
 
 
 func _physics_process(delta: float) -> void:
@@ -22,13 +23,16 @@ func _physics_process(delta: float) -> void:
 	animated_character.animate()
 
 	if Input.is_action_just_pressed("dash"):
-		Globals.camera.screenshake(0.3, 3)
+		Globals.camera.screenshake(0.3, 1)
 
 		$spawn_dash_ghost.start()
 		moveable.dash()
 
 	if Input.is_action_just_pressed("interact"):
 		healthbox.damage(20)
+
+	if Input.is_action_pressed("shoot"):
+		gun.shoot(get_global_mouse_position())
 
 	if moveable.state == moveable.STATES.dashing:
 		dash_particle.rotation = animated_character.rotation - deg_to_rad(90)
@@ -38,4 +42,5 @@ func _physics_process(delta: float) -> void:
 			$spawn_dash_ghost.start()
 			spawner.spawn_obj(global_position, animated_character.rotation, animated_character.scale)
 	else:
+		dash_particle.rotation = moveable.velocity.angle()
 		dash_particle.emitting = false
