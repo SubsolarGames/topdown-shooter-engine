@@ -9,6 +9,8 @@ signal collided
 @export var friction: float = 0.0
 @export var dash_speed: float = 0.0
 @export var collide_signal: bool = false
+@export var always_friction: bool = false
+@export var slowdown: float = 0.0
 
 
 enum STATES {
@@ -28,6 +30,9 @@ func _physics_process(delta: float) -> void:
         if collision_info:
             collided.emit()
 
+    if always_friction:
+        add_friction(delta)
+
     entity.position = global_position
     position = Vector2.ZERO
 
@@ -35,7 +40,7 @@ func _physics_process(delta: float) -> void:
 func accel_direction(direction: Vector2, delta: float):
     if state != STATES.dashing:
         state = STATES.moving
-    velocity = lerp(velocity, direction.normalized() * speed, Globals.blend(accel * delta))
+    velocity = lerp(velocity, direction.normalized() * (speed-slowdown), Globals.blend(accel * delta))
 
 
 

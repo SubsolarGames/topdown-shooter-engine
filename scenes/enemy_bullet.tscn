@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://pqim4ti8v6xt"]
+
+[ext_resource type="Script" uid="uid://bokqxbgvm681j" path="res://scripts/bullet.gd" id="1_02qb5"]
+[ext_resource type="PackedScene" uid="uid://b3xas6plm47tt" path="res://scenes/bullet_particle.tscn" id="2_0rhp8"]
+[ext_resource type="Texture2D" uid="uid://c7qflwvg6e6ly" path="res://assets/enemy_bullet.png" id="3_02qb5"]
+[ext_resource type="PackedScene" uid="uid://cu2l7rfmj5aeb" path="res://scenes/moveable.tscn" id="4_v2l1h"]
+[ext_resource type="PackedScene" uid="uid://cyi562wnh0tgw" path="res://scenes/damagebox.tscn" id="5_13kv7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eoqba"]
+size = Vector2(12, 8)
+
+[node name="enemy_bullet" type="Node2D"]
+script = ExtResource("1_02qb5")
+particle_scene = ExtResource("2_0rhp8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_02qb5")
+
+[node name="moveable" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("4_v2l1h")]
+collision_layer = 0
+collision_mask = 2
+entity = NodePath("..")
+collide_signal = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="moveable"]
+shape = SubResource("RectangleShape2D_eoqba")
+
+[node name="damagebox" parent="." instance=ExtResource("5_13kv7")]
+collision_layer = 8
+collision_mask = 0
+damage = 1.0
+knockback = 50.0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="damagebox"]
+shape = SubResource("RectangleShape2D_eoqba")

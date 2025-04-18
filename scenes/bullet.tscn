@@ -29,6 +29,7 @@ shape = SubResource("RectangleShape2D_eoqba")
 collision_layer = 4
 collision_mask = 0
 damage = 1.0
+knockback = 50.0
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="damagebox"]
 shape = SubResource("RectangleShape2D_eoqba")

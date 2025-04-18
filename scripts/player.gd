@@ -10,7 +10,14 @@ extends Node2D
 @export var gun: Gun
 
 
-func _physics_process(delta: float) -> void:
+
+func _ready() -> void:
+	Globals.player = self
+
+
+func _process(delta: float) -> void:
+	gun.target = get_global_mouse_position()
+	
 	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 
 	if direction != Vector2.ZERO:
@@ -28,12 +35,15 @@ func _physics_process(delta: float) -> void:
 		$spawn_dash_ghost.start()
 		moveable.dash()
 
-	if Input.is_action_just_pressed("interact"):
-		healthbox.damage(20)
 
 	if Input.is_action_pressed("shoot"):
-		gun.shoot(get_global_mouse_position())
+		gun.shoot()
+		moveable.slowdown = gun.slowdown
+	else:
+		moveable.slowdown = 0
 
+	healthbox.get_children()[0].disabled = moveable.state == moveable.STATES.dashing
+	
 	if moveable.state == moveable.STATES.dashing:
 		dash_particle.rotation = animated_character.rotation - deg_to_rad(90)
 		dash_particle.emitting = true

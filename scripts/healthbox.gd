@@ -3,7 +3,9 @@ class_name HealthBox
 
 
 @export var entity: Node2D
+@export var moveable: Moveable
 @export var sprite: Sprite2D
+@export var knockback_mul: float = 1.0
 @export var health: float = 0.0
 @export var screenshake_hit: float = 0.0
 @export var screenshake_duration: float = 0.0
@@ -19,13 +21,15 @@ class_name HealthBox
 var hit_dir: float = 0.0
 
 
-func damage(amount: float) -> void:
+func damage(amount: float, knockback: float) -> void:
 	health -= amount
 
 	if sprite != null:
 		sprite.material.set_shader_parameter("active", true)
 		get_tree().create_timer(0.15).timeout.connect(func():
 			sprite.material.set_shader_parameter("active", false))
+
+	moveable.add_force(Vector2(knockback, 0).rotated(hit_dir) * knockback_mul)
 
 	if health > 0:
 		Globals.camera.screenshake(screenshake_duration, screenshake_hit)
@@ -53,5 +57,14 @@ func damage(amount: float) -> void:
 func _on_area_entered(area:Area2D) -> void:
 	if area is DamageBox:
 		area.damaged.emit()
-		hit_dir = area.global_rotation
-		damage(area.damage)
+
+		if len(area.get_parent().get_children().filter(func(obj): return obj is Moveable)) > 0:
+			var moveable_obj: Moveable = area.get_parent().get_children().filter(func(obj): return obj is Moveable)[0]
+
+			if moveable_obj.velocity != Vector2.ZERO:
+				hit_dir = moveable_obj.velocity.angle()
+			else:
+				print("SDFSDFSD")
+				hit_dir = moveable.velocity.angle() + deg_to_rad(180)
+
+		damage(area.damage, area.knockback)

@@ -2,6 +2,7 @@ extends Node
 
 
 var camera: Camera2D
+var player: Node2D
 
 
 func slowdown(strength, length) -> void:

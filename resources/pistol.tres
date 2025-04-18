@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="GunResource" load_steps=3 format=3 uid="uid://bm8thlo53c1w6"]
-
-[ext_resource type="Script" uid="uid://bbd3cxyuixrfj" path="res://scripts/gun_resouces.gd" id="1_6a4xg"]
-[ext_resource type="Texture2D" uid="uid://3o24fnkncj8e" path="res://assets/pistol.png" id="2_jk5il"]
-
-[resource]
-script = ExtResource("1_6a4xg")
-sprite_texture = ExtResource("2_jk5il")
-metadata/_custom_type_script = "uid://bbd3cxyuixrfj"

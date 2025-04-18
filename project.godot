@@ -79,6 +79,15 @@ interact={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_2="wall"
+2d_physics/layer_3="bullet"
+2d_physics/layer_4="damage"
+2d_physics/layer_5="destructable"
+2d_physics/layer_9="enemy_body"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

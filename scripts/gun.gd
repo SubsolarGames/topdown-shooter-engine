@@ -9,11 +9,21 @@ class_name Gun
 @export var bullets: int = 3
 @export var innac: float = 0
 @export var spread: float = 30.0
+@export var fire_rate: float = 0.2
+@export var slowdown: float = 100.0
 
+var target: Vector2 = Vector2.ZERO
+var offset: Vector2= Vector2.ZERO
+
+
+func _ready() -> void:
+	$fire_rate.wait_time = fire_rate
 
 
 func _process(delta: float) -> void:
-	look_at(get_global_mouse_position())
+	offset = $Sprite2D/muzzle_flash.position
+
+	look_at(target)
 
 	rotation_degrees = wrap(rotation_degrees, 0, 360)
 	if rotation_degrees > 90 and rotation_degrees < 270:
@@ -22,7 +32,7 @@ func _process(delta: float) -> void:
 		scale.y = 1
 
 
-func shoot(target: Vector2) -> void:
+func shoot() -> void:
 	if $fire_rate.time_left == 0.0:
 		$fire_rate.start()
 
@@ -31,7 +41,7 @@ func shoot(target: Vector2) -> void:
 
 		var shell_inst: CPUParticles2D = shell_scene.instantiate()
 		shell_inst.position = $Sprite2D.global_position
-		shell_inst.rotation = (global_position).angle_to_point(get_global_mouse_position())
+		shell_inst.rotation = (global_position).angle_to_point(target)
 		entity.get_parent().add_child(shell_inst)
 
 		var angle: float = 0.0
@@ -39,7 +49,7 @@ func shoot(target: Vector2) -> void:
 
 		for i in range(bullets):
 
-			var mod_angle: float = angle + randf_range(-innac, innac) + rad_to_deg((global_position).angle_to_point(get_global_mouse_position()))
+			var mod_angle: float = angle + randf_range(-innac, innac) + rad_to_deg((global_position).angle_to_point(target))
 			var inst: Node2D = bullet_scene.instantiate()
 			inst.position = $Sprite2D/muzzle_flash.global_position
 			inst.rotation_degrees = mod_angle
