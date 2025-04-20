@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
 uniform bool active = false;
+uniform float alpha = 1.0;
 
 void fragment() {
 	vec4 previous_color = texture(TEXTURE, UV);
@@ -10,5 +11,8 @@ void fragment() {
 	{
 		new_color = white_color;
 	}
+	
+	new_color.a = alpha * new_color.a;
+	
 	COLOR = new_color;
 }

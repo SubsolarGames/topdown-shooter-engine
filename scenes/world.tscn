@@ -1,18 +1,17 @@
-[gd_scene load_steps=9 format=4 uid="uid://o4maif022yrb"]
+[gd_scene load_steps=8 format=4 uid="uid://o4maif022yrb"]
 
 [ext_resource type="PackedScene" uid="uid://d0k5mnbjggsxq" path="res://scenes/player.tscn" id="1_nnsk1"]
 [ext_resource type="PackedScene" uid="uid://cail1nhbrwdif" path="res://scenes/camera.tscn" id="2_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://baqqse1b8oa8g" path="res://scenes/ui.tscn" id="4_71j4m"]
 [ext_resource type="PackedScene" uid="uid://dqoywdeqr7ljk" path="res://scenes/tilemap.tscn" id="4_k0juu"]
 [ext_resource type="PackedScene" uid="uid://bd57lne5ya8gn" path="res://scenes/rock.tscn" id="5_71j4m"]
-[ext_resource type="PackedScene" uid="uid://b7l3bmxdlhtkp" path="res://scenes/enemy_basic.tscn" id="6_qfnet"]
-[ext_resource type="PackedScene" uid="uid://0ldag2dnotpk" path="res://scenes/enemy_sniper.tscn" id="7_i7141"]
-[ext_resource type="PackedScene" uid="uid://c7t12aa3tqtm5" path="res://scenes/enemy_charger.tscn" id="8_4mrxx"]
+[ext_resource type="PackedScene" uid="uid://camajk38u4uyg" path="res://scenes/coin.tscn" id="6_qfnet"]
+[ext_resource type="PackedScene" uid="uid://b7l3bmxdlhtkp" path="res://scenes/enemy_basic.tscn" id="7_i7141"]
 
 [node name="world" type="Node2D"]
 
 [node name="player" parent="." instance=ExtResource("1_nnsk1")]
-position = Vector2(153, 89)
+position = Vector2(352, -42)
 
 [node name="camera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("2_rwgxs")]
 position = Vector2(153, 89)
@@ -35,26 +34,35 @@ position = Vector2(200, 37)
 [node name="rock4" parent="." instance=ExtResource("5_71j4m")]
 position = Vector2(306, 133)
 
-[node name="enemy_basic" parent="." instance=ExtResource("6_qfnet")]
-position = Vector2(145, -2)
+[node name="coin" parent="." instance=ExtResource("6_qfnet")]
+position = Vector2(113, 113)
 
-[node name="enemy_basic2" parent="." instance=ExtResource("6_qfnet")]
-position = Vector2(188, -7)
+[node name="coin2" parent="." instance=ExtResource("6_qfnet")]
+position = Vector2(107, 109)
 
-[node name="enemy_basic3" parent="." instance=ExtResource("6_qfnet")]
-position = Vector2(87, 4)
+[node name="enemy_basic" parent="." instance=ExtResource("7_i7141")]
+position = Vector2(48, 27)
 
-[node name="enemy_basic4" parent="." instance=ExtResource("6_qfnet")]
-position = Vector2(302, 40)
+[node name="enemy_basic2" parent="." instance=ExtResource("7_i7141")]
+position = Vector2(30, 39)
 
-[node name="enemy_basic5" parent="." instance=ExtResource("6_qfnet")]
-position = Vector2(319, 67)
+[node name="enemy_basic3" parent="." instance=ExtResource("7_i7141")]
+position = Vector2(27, 17)
 
-[node name="enemy_basic6" parent="." instance=ExtResource("6_qfnet")]
-position = Vector2(307, 103)
+[node name="enemy_basic4" parent="." instance=ExtResource("7_i7141")]
+position = Vector2(0, 25)
 
-[node name="enemy_sniper" parent="." instance=ExtResource("7_i7141")]
-position = Vector2(29, 191)
+[node name="enemy_basic5" parent="." instance=ExtResource("7_i7141")]
+position = Vector2(15, 41)
 
-[node name="enemy_charger" parent="." instance=ExtResource("8_4mrxx")]
-position = Vector2(-27, 33)
+[node name="enemy_basic6" parent="." instance=ExtResource("7_i7141")]
+position = Vector2(54, 50)
+
+[node name="enemy_basic7" parent="." instance=ExtResource("7_i7141")]
+position = Vector2(14, 4)
+
+[node name="enemy_basic8" parent="." instance=ExtResource("7_i7141")]
+position = Vector2(-11, 45)
+
+[node name="enemy_basic9" parent="." instance=ExtResource("7_i7141")]
+position = Vector2(94, 20)

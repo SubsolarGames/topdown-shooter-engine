@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://by7g370qclxhm"]
+
+[ext_resource type="Script" uid="uid://cmix27pe05ym0" path="res://scripts/attract_force.gd" id="1_rhfxy"]
+
+[node name="attract_force" type="Area2D"]
+script = ExtResource("1_rhfxy")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

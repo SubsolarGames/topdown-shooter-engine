@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dso87cd407n3w"]
+
+[ext_resource type="Texture2D" uid="uid://inbo7va15hfj" path="res://assets/coin.png" id="1_40dpo"]
+[ext_resource type="Script" uid="uid://clrertliktr0y" path="res://scripts/coin_effect.gd" id="2_fcxn5"]
+
+[node name="coin_effect" type="Sprite2D"]
+texture = ExtResource("1_40dpo")
+script = ExtResource("2_fcxn5")

@@ -21,7 +21,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	offset = $Sprite2D/muzzle_flash.position
+	offset = $Sprite2D.offset.rotated(rotation)
 
 	look_at(target)
 

@@ -14,7 +14,7 @@ func _ready() -> void:
 
 
 func destroy() -> void:
-    Globals.camera.screenshake(0.2, 1)
+    Globals.camera.screenshake(0.05, 1)
 
     var particle_inst: CPUParticles2D = particle_scene.instantiate()
     particle_inst.rotation = $moveable.velocity.angle()

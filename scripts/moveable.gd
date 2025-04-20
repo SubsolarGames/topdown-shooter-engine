@@ -11,6 +11,7 @@ signal collided
 @export var collide_signal: bool = false
 @export var always_friction: bool = false
 @export var slowdown: float = 0.0
+@export var bounce: bool = false
 
 
 enum STATES {
@@ -20,6 +21,8 @@ enum STATES {
 }
 
 var state: STATES = STATES.still
+var last_dir: Vector2 = Vector2.ZERO
+
 
 func _physics_process(delta: float) -> void:
     if not collide_signal:
@@ -28,6 +31,9 @@ func _physics_process(delta: float) -> void:
         var collision_info = move_and_collide(velocity * delta)
 
         if collision_info:
+            if bounce:
+                velocity = velocity.bounce(collision_info.get_normal())
+                
             collided.emit()
 
     if always_friction:
@@ -40,6 +46,7 @@ func _physics_process(delta: float) -> void:
 func accel_direction(direction: Vector2, delta: float):
     if state != STATES.dashing:
         state = STATES.moving
+    last_dir = direction
     velocity = lerp(velocity, direction.normalized() * (speed-slowdown), Globals.blend(accel * delta))
 
 
@@ -61,4 +68,4 @@ func dash() -> void:
     get_tree().create_timer(0.0006 * dash_speed).timeout.connect(func():
         state = STATES.still)
 
-    velocity = velocity.normalized() * dash_speed
+    velocity = last_dir.normalized() * dash_speed

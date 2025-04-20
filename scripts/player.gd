@@ -1,4 +1,5 @@
 extends Node2D
+class_name Player
 
 
 @export var moveable: Moveable
@@ -8,14 +9,34 @@ extends Node2D
 @export var dash_particle: CPUParticles2D
 @export var healthbox: HealthBox
 @export var gun: Gun
+@export var normal_texture: Texture2D
+@export var weak_texture: Texture2D
+@export var max_dashes: int = 3
 
+var target_mod: float = 1.0
+var invinc: bool = false
+var dashes: int = 3
 
 
 func _ready() -> void:
+
+	Globals.slowdown(0.0, 1)
 	Globals.player = self
+
+	healthbox.take_damage.connect(on_hit)
 
 
 func _process(delta: float) -> void:
+	modulate.a = lerp(modulate.a, target_mod, 10 * delta)
+	animated_character.material.set_shader_parameter("alpha", modulate.a)
+	if invinc:
+		if modulate.a > target_mod - 0.05 and modulate.a < target_mod + 0.05:
+			if target_mod == 1.0:
+				target_mod = 0.0
+			elif target_mod == 0.0:
+				target_mod = 1.0
+			
+
 	gun.target = get_global_mouse_position()
 	
 	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
@@ -29,20 +50,33 @@ func _process(delta: float) -> void:
 
 	animated_character.animate()
 
-	if Input.is_action_just_pressed("dash"):
+	if Input.is_action_just_pressed("dash") and dashes > 0:
+		if $dash_regen.time_left == 0.0:
+			$dash_regen.start()
+
+		healthbox.invinc = true
+		get_tree().create_timer(0.0006 * moveable.dash_speed).timeout.connect(func():
+			if not invinc:
+				healthbox.invinc = false)
+
 		Globals.camera.screenshake(0.3, 1)
 
 		$spawn_dash_ghost.start()
 		moveable.dash()
 
+		dashes -= 1
+
+		if dashes == 0:
+			$animated_character.texture = weak_texture
+
+	if $animated_character.texture == weak_texture and dashes > 0:
+		$animated_character.texture = normal_texture
 
 	if Input.is_action_pressed("shoot"):
 		gun.shoot()
 		moveable.slowdown = gun.slowdown
 	else:
 		moveable.slowdown = 0
-
-	healthbox.get_children()[0].disabled = moveable.state == moveable.STATES.dashing
 	
 	if moveable.state == moveable.STATES.dashing:
 		dash_particle.rotation = animated_character.rotation - deg_to_rad(90)
@@ -54,3 +88,24 @@ func _process(delta: float) -> void:
 	else:
 		dash_particle.rotation = moveable.velocity.angle()
 		dash_particle.emitting = false
+
+
+func _on_dash_regen_timeout() -> void:
+	dashes += 1
+
+	if dashes < max_dashes:
+		$dash_regen.start()
+
+
+func on_hit() -> void:
+	invinc = true
+	healthbox.invinc = true
+	target_mod = 0.0
+	
+	get_tree().create_timer(1.0).timeout.connect(func():
+		healthbox.invinc = false
+		invinc = false
+		target_mod = 1.0
+	)
+
+	Globals.hit_effect(0.1)

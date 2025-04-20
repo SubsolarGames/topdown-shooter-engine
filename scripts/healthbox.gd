@@ -1,11 +1,14 @@
 extends Area2D
 class_name HealthBox
 
+signal died
+signal take_damage
 
 @export var entity: Node2D
 @export var moveable: Moveable
 @export var sprite: Sprite2D
 @export var knockback_mul: float = 1.0
+@export var max_health: float = 0.0
 @export var health: float = 0.0
 @export var screenshake_hit: float = 0.0
 @export var screenshake_duration: float = 0.0
@@ -16,8 +19,9 @@ class_name HealthBox
 @export var particle_scene: PackedScene
 @export var hit_particle_scale: float = 0.0
 @export var hit_particle_scene: PackedScene
+@export var destroy_when_die: bool = true
 
-
+var invinc: bool = false
 var hit_dir: float = 0.0
 
 
@@ -41,6 +45,8 @@ func damage(amount: float, knockback: float) -> void:
 		inst.rotation = hit_dir
 		inst.position = entity.position
 		entity.get_parent().add_child(inst)
+
+		take_damage.emit()
 	else:
 		Globals.camera.screenshake(screenshake_duration * die_effect_mul, screenshake_hit * die_effect_mul)
 		Globals.slowdown(0, frame_freeze_duration * die_effect_mul)
@@ -51,11 +57,14 @@ func damage(amount: float, knockback: float) -> void:
 		inst.position = entity.position
 		entity.get_parent().add_child(inst)
 
-		entity.queue_free()
+		died.emit()
+
+		if destroy_when_die:
+			entity.queue_free()
 
 
 func _on_area_entered(area:Area2D) -> void:
-	if area is DamageBox:
+	if area is DamageBox and not invinc:
 		area.damaged.emit()
 
 		if len(area.get_parent().get_children().filter(func(obj): return obj is Moveable)) > 0:
@@ -64,7 +73,6 @@ func _on_area_entered(area:Area2D) -> void:
 			if moveable_obj.velocity != Vector2.ZERO:
 				hit_dir = moveable_obj.velocity.angle()
 			else:
-				print("SDFSDFSD")
 				hit_dir = moveable.velocity.angle() + deg_to_rad(180)
 
 		damage(area.damage, area.knockback)

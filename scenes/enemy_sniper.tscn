@@ -29,3 +29,6 @@ bullet_scene = ExtResource("5_5uf6s")
 bullets = 1
 innac = 5.0
 fire_rate = 0.5
+
+[node name="lootable" parent="." index="10"]
+amounts = Array[int]([3, 1])

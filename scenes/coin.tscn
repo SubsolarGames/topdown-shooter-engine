@@ -1,0 +1,89 @@
+[gd_scene load_steps=12 format=3 uid="uid://camajk38u4uyg"]
+
+[ext_resource type="Script" uid="uid://bv1s7vyptkapl" path="res://scripts/coin.gd" id="1_1ikuy"]
+[ext_resource type="Texture2D" uid="uid://inbo7va15hfj" path="res://assets/coin.png" id="1_rwqht"]
+[ext_resource type="Script" uid="uid://bgacs1jyw0ka1" path="res://scripts/sin_move.gd" id="2_d14el"]
+[ext_resource type="PackedScene" uid="uid://cu2l7rfmj5aeb" path="res://scenes/moveable.tscn" id="2_i64fm"]
+[ext_resource type="PackedScene" uid="uid://dso87cd407n3w" path="res://scenes/coin_effect.tscn" id="2_jig8b"]
+[ext_resource type="PackedScene" uid="uid://blnospp0aw84v" path="res://scenes/healthbox.tscn" id="3_11l1o"]
+[ext_resource type="PackedScene" uid="uid://by7g370qclxhm" path="res://scenes/attract_force.tscn" id="6_wnlwo"]
+
+[sub_resource type="Curve" id="Curve_wnlwo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.295551, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_wnlwo"]
+offsets = PackedFloat32Array(0, 0.502155, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i64fm"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wnlwo"]
+radius = 23.0868
+
+[node name="coin" type="Node2D" node_paths=PackedStringArray("healthbox")]
+script = ExtResource("1_1ikuy")
+coin_effect_scene = ExtResource("2_jig8b")
+healthbox = NodePath("healthbox")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(0, -3)
+lifetime = 0.75
+spread = 180.0
+gravity = Vector2(0, -150)
+initial_velocity_min = 30.0
+initial_velocity_max = 40.0
+angular_velocity_min = 50.0
+angular_velocity_max = 100.0
+damping_min = 150.0
+damping_max = 150.0
+angle_max = 360.0
+scale_amount_min = 2.0
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_wnlwo")
+color = Color(0, 0.6, 0.858824, 1)
+color_ramp = SubResource("Gradient_wnlwo")
+
+[node name="sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_rwqht")
+script = ExtResource("2_d14el")
+sin_height = 3.0
+sin_speed = 5.0
+
+[node name="moveable" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("2_i64fm")]
+collision_layer = 0
+collision_mask = 2
+entity = NodePath("..")
+speed = 200.0
+accel = 20.0
+friction = 1.0
+collide_signal = true
+always_friction = true
+bounce = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="moveable"]
+shape = SubResource("CircleShape2D_i64fm")
+
+[node name="healthbox" parent="." node_paths=PackedStringArray("entity", "moveable") instance=ExtResource("3_11l1o")]
+collision_layer = 0
+entity = NodePath("..")
+moveable = NodePath("../moveable")
+screenshake_hit = 1.0
+screenshake_duration = 0.2
+frame_freeze_duration = 0.02
+die_effect_mul = 1.0
+particles_color = Color(0.172549, 0.909804, 0.960784, 1)
+particle_scale = 0.1
+hit_particle_scale = 0.25
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="healthbox"]
+shape = SubResource("CircleShape2D_i64fm")
+
+[node name="attract_force" parent="." node_paths=PackedStringArray("entity", "moveable") instance=ExtResource("6_wnlwo")]
+collision_layer = 0
+entity = NodePath("..")
+moveable = NodePath("../moveable")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attract_force"]
+shape = SubResource("CircleShape2D_wnlwo")

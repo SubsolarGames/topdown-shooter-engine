@@ -8,6 +8,7 @@
 resource_local_to_scene = true
 shader = ExtResource("2_1s6xc")
 shader_parameter/active = false
+shader_parameter/alpha = 1.0
 
 [node name="enemy_charger" instance=ExtResource("1_d1sr8")]
 
@@ -18,3 +19,6 @@ texture = ExtResource("3_1s6xc")
 [node name="CollisionShape2D2" parent="dash-range" index="0"]
 scale = Vector2(1.01061, 0.997843)
 disabled = false
+
+[node name="lootable" parent="." index="9"]
+amounts = Array[int]([3, 1])
