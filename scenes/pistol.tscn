@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bchxpso63646"]
+
+[ext_resource type="PackedScene" uid="uid://2k48cnlhg4hd" path="res://scenes/gun.tscn" id="1_igbvm"]
+
+[node name="pistol" instance=ExtResource("1_igbvm")]
+bullets = 1
+innac = 5.0
+slowdown = 50.0

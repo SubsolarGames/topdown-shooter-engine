@@ -2,9 +2,15 @@ extends CPUParticles2D
 
 
 @export var effect_scale: float = 1.0
+@export var on_start: bool = true
 
 
 func _ready() -> void:
+	if on_start:
+		setoff()
+
+
+func setoff():
 	initial_velocity_min *= effect_scale
 	initial_velocity_max *= effect_scale
 	damping_min *= effect_scale

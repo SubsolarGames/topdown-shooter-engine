@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bd57lne5ya8gn"]
 
 [ext_resource type="PackedScene" uid="uid://cu2l7rfmj5aeb" path="res://scenes/moveable.tscn" id="1_1di36"]
-[ext_resource type="Material" uid="uid://gkpv3mdq56sj" path="res://white.tres" id="1_ik6fu"]
+[ext_resource type="Material" uid="uid://gkpv3mdq56sj" path="res://shaders/white.tres" id="1_ik6fu"]
 [ext_resource type="Texture2D" uid="uid://dvrh1y0s6nhou" path="res://assets/rock.png" id="2_872ht"]
 [ext_resource type="PackedScene" uid="uid://blnospp0aw84v" path="res://scenes/healthbox.tscn" id="2_mek2u"]
 [ext_resource type="PackedScene" uid="uid://b4gpeb6b6m1cj" path="res://scenes/lootable.tscn" id="5_p2d0s"]

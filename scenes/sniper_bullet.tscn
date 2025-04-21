@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bv2l0vuxd1041"]
+
+[ext_resource type="PackedScene" uid="uid://lqbxvr1pisqf" path="res://scenes/bullet.tscn" id="1_vthnn"]
+[ext_resource type="Texture2D" uid="uid://bkhppncnhpvsh" path="res://assets/sniper_bullet.png" id="2_30l6k"]
+
+[node name="sniper_bullet" instance=ExtResource("1_vthnn")]
+piercing = true
+particle_color = Color(0.172549, 0.909804, 0.960784, 1)
+
+[node name="Sprite2D" parent="." index="0"]
+position = Vector2(-2, 0)
+texture = ExtResource("2_30l6k")
+
+[node name="damagebox" parent="." index="2"]
+damage = 2.0
+knockback = 100.0

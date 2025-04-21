@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://qr5ug8uv4o2" path="res://assets/dash_icon.png" id="1_gmopn"]
 
 [node name="dash_icon" type="Control"]
-custom_minimum_size = Vector2(5, 8)
+custom_minimum_size = Vector2(5, 16)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,5 +14,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 4)
 texture = ExtResource("1_gmopn")
 centered = false

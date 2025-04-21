@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3 uid="uid://bnklc36eyngm3"]
+
+[ext_resource type="PackedScene" uid="uid://c1s5vxkxe11ri" path="res://scenes/interactable.tscn" id="1_0xmuj"]
+[ext_resource type="Script" uid="uid://bmyy5enb65qb5" path="res://scripts/gun_pickup.gd" id="2_12mon"]
+[ext_resource type="Shader" uid="uid://c6bxnkhwnrosf" path="res://shaders/outline.gdshader" id="2_u522s"]
+[ext_resource type="PackedScene" uid="uid://dike0krsq4na3" path="res://scenes/shotgun.tscn" id="3_krkcb"]
+[ext_resource type="Texture2D" uid="uid://c44scviqr1uf1" path="res://assets/shotgun.png" id="3_u522s"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_12mon"]
+resource_local_to_scene = true
+shader = ExtResource("2_u522s")
+shader_parameter/width = 1
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/flickering_speed = 0.0
+shader_parameter/minimal_flickering_alpha = 0.9
+
+[node name="shotgun_pickup" instance=ExtResource("1_0xmuj")]
+script = ExtResource("2_12mon")
+gun_scene = ExtResource("3_krkcb")
+
+[node name="Sprite2D" parent="." index="0"]
+material = SubResource("ShaderMaterial_12mon")
+texture = ExtResource("3_u522s")
+
+[node name="text" parent="." index="3"]
+text = "[e] to pickup"

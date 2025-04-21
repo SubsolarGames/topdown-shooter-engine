@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=3 uid="uid://c1s5vxkxe11ri"]
+
+[ext_resource type="PackedScene" uid="uid://cu2l7rfmj5aeb" path="res://scenes/moveable.tscn" id="1_56v82"]
+[ext_resource type="Script" uid="uid://b7ol2mh3t8awm" path="res://scripts/interactable.gd" id="1_w4xns"]
+[ext_resource type="Shader" uid="uid://c6bxnkhwnrosf" path="res://shaders/outline.gdshader" id="2_8o6w2"]
+[ext_resource type="LabelSettings" uid="uid://bq4napb1a0c60" path="res://fonts/default small.tres" id="5_o0ci7"]
+[ext_resource type="PackedScene" uid="uid://blnospp0aw84v" path="res://scenes/healthbox.tscn" id="6_lo7ue"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w4xns"]
+resource_local_to_scene = true
+shader = ExtResource("2_8o6w2")
+shader_parameter/width = 1
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/flickering_speed = 0.0
+shader_parameter/minimal_flickering_alpha = 0.9
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8o6w2"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w4xns"]
+radius = 59.0339
+
+[node name="interactable" type="Node2D" node_paths=PackedStringArray("healthbox")]
+script = ExtResource("1_w4xns")
+healthbox = NodePath("healthbox")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_w4xns")
+
+[node name="moveable" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("1_56v82")]
+collision_layer = 0
+collision_mask = 18
+entity = NodePath("..")
+speed = 50.0
+friction = 5.0
+collide_signal = true
+always_friction = true
+bounce = true
+random_force = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="moveable"]
+shape = SubResource("CircleShape2D_8o6w2")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_w4xns")
+
+[node name="text" type="Label" parent="."]
+offset_left = -51.0
+offset_top = -27.0
+offset_right = 54.0
+offset_bottom = -4.0
+text = "[e] to interact"
+label_settings = ExtResource("5_o0ci7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="healthbox" parent="." node_paths=PackedStringArray("entity", "moveable") instance=ExtResource("6_lo7ue")]
+entity = NodePath("..")
+moveable = NodePath("../moveable")
+knockback_mul = 0.0
+screenshake_hit = 1.0
+screenshake_duration = 0.2
+frame_freeze_duration = 0.02
+die_effect_mul = 1.0
+particle_scale = 0.1
+hit_particle_scale = 0.1
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

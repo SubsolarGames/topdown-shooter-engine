@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://2k48cnlhg4hd"]
+[gd_scene load_steps=10 format=3 uid="uid://2k48cnlhg4hd"]
 
 [ext_resource type="Script" uid="uid://gici228a5gw" path="res://scripts/gun.gd" id="1_og67c"]
 [ext_resource type="Texture2D" uid="uid://3o24fnkncj8e" path="res://assets/pistol.png" id="1_x77fm"]
@@ -44,6 +44,46 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(0.996078, 0.905882, 0.380392, 0)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_6b133"]
+resource_name = "appear"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(18, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1.4, 0.7), Vector2(0.8, 1.3), Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_og67c"]
 resource_name = "fire"
@@ -88,6 +128,7 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gp1hk"]
 _data = {
 &"RESET": SubResource("Animation_gp1hk"),
+&"appear": SubResource("Animation_6b133"),
 &"fire": SubResource("Animation_og67c")
 }
 
@@ -97,6 +138,7 @@ bullet_scene = ExtResource("2_6b133")
 shell_scene = ExtResource("2_qd4js")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1e-05, 1e-05)
 texture = ExtResource("1_x77fm")
 offset = Vector2(18, 0)
 
@@ -110,6 +152,7 @@ texture = ExtResource("3_gp1hk")
 libraries = {
 &"": SubResource("AnimationLibrary_gp1hk")
 }
+autoplay = "appear"
 
 [node name="fire_rate" type="Timer" parent="."]
 wait_time = 0.2

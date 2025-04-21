@@ -1,0 +1,42 @@
+[gd_scene load_steps=11 format=3 uid="uid://cqw8s4pct2k6g"]
+
+[ext_resource type="PackedScene" uid="uid://c1s5vxkxe11ri" path="res://scenes/interactable.tscn" id="1_sy5e1"]
+[ext_resource type="Shader" uid="uid://c6bxnkhwnrosf" path="res://shaders/outline.gdshader" id="2_gqd3d"]
+[ext_resource type="Texture2D" uid="uid://dbl5s014ms6ks" path="res://assets/chest.png" id="3_gqd3d"]
+[ext_resource type="PackedScene" uid="uid://b4gpeb6b6m1cj" path="res://scenes/lootable.tscn" id="4_yue2o"]
+[ext_resource type="PackedScene" uid="uid://camajk38u4uyg" path="res://scenes/coin.tscn" id="5_w02o5"]
+[ext_resource type="PackedScene" uid="uid://dtio4y8xj7pr3" path="res://scenes/heart_collect.tscn" id="6_ilhio"]
+[ext_resource type="PackedScene" uid="uid://bnklc36eyngm3" path="res://scenes/shotgun_pickup.tscn" id="7_ilhio"]
+[ext_resource type="PackedScene" uid="uid://ktp3bfailwbb" path="res://scenes/minigun_pickup.tscn" id="8_8me8i"]
+[ext_resource type="PackedScene" uid="uid://0hw76d5w8b8k" path="res://scenes/sniper_pickup.tscn" id="9_lfymr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yue2o"]
+resource_local_to_scene = true
+shader = ExtResource("2_gqd3d")
+shader_parameter/width = 1
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/flickering_speed = 0.0
+shader_parameter/minimal_flickering_alpha = 0.9
+
+[node name="chest" instance=ExtResource("1_sy5e1")]
+move_at_start = false
+
+[node name="Sprite2D" parent="." index="0"]
+material = SubResource("ShaderMaterial_yue2o")
+texture = ExtResource("3_gqd3d")
+
+[node name="text" parent="." index="3"]
+text = "[e] to open"
+
+[node name="healthbox" parent="." index="4"]
+screenshake_hit = 2.0
+frame_freeze_duration = 0.025
+particle_scale = 0.25
+hit_particle_scale = 0.25
+
+[node name="lootable" parent="." index="5" node_paths=PackedStringArray("entity", "healthbox") instance=ExtResource("4_yue2o")]
+entity = NodePath("..")
+healthbox = NodePath("../healthbox")
+items = Array[PackedScene]([ExtResource("5_w02o5"), ExtResource("6_ilhio"), ExtResource("7_ilhio"), ExtResource("8_8me8i"), ExtResource("9_lfymr")])
+chances = Array[float]([1.0, 1.0, 0.33, 0.33, 0.33])
+amounts = Array[int]([20, 3, 1, 1, 1])

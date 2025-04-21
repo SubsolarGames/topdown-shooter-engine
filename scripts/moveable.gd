@@ -12,6 +12,7 @@ signal collided
 @export var always_friction: bool = false
 @export var slowdown: float = 0.0
 @export var bounce: bool = false
+@export var random_force: bool = false
 
 
 enum STATES {
@@ -22,6 +23,11 @@ enum STATES {
 
 var state: STATES = STATES.still
 var last_dir: Vector2 = Vector2.ZERO
+
+
+func _ready() -> void:
+    if random_force:
+        add_force(Vector2(randf_range(speed * 0.7, speed * 1.3), 0).rotated(deg_to_rad(randf_range(0, 360))))
 
 
 func _physics_process(delta: float) -> void:

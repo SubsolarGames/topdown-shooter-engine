@@ -6,3 +6,4 @@
 resource_local_to_scene = true
 shader = ExtResource("1_ptkg5")
 shader_parameter/active = false
+shader_parameter/alpha = 1.0

@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://ktp3bfailwbb"]
+
+[ext_resource type="PackedScene" uid="uid://bnklc36eyngm3" path="res://scenes/shotgun_pickup.tscn" id="1_51hqx"]
+[ext_resource type="Shader" uid="uid://c6bxnkhwnrosf" path="res://shaders/outline.gdshader" id="2_8mxyw"]
+[ext_resource type="PackedScene" uid="uid://2fj0hgndt22o" path="res://scenes/minigun.tscn" id="2_44oi1"]
+[ext_resource type="Texture2D" uid="uid://oaekc33t68hk" path="res://assets/minigun.png" id="4_44oi1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_44oi1"]
+resource_local_to_scene = true
+shader = ExtResource("2_8mxyw")
+shader_parameter/width = 1
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/flickering_speed = 0.0
+shader_parameter/minimal_flickering_alpha = 0.9
+
+[node name="minigun_pickup" instance=ExtResource("1_51hqx")]
+gun_scene = ExtResource("2_44oi1")
+
+[node name="Sprite2D" parent="." index="0"]
+material = SubResource("ShaderMaterial_44oi1")
+texture = ExtResource("4_44oi1")
+
+[node name="moveable" parent="." index="1"]
+speed = 0.0
+random_force = false

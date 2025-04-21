@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dike0krsq4na3"]
+
+[ext_resource type="PackedScene" uid="uid://2k48cnlhg4hd" path="res://scenes/gun.tscn" id="1_voyse"]
+[ext_resource type="Texture2D" uid="uid://c44scviqr1uf1" path="res://assets/shotgun.png" id="2_gnj2g"]
+
+[node name="shotgun" instance=ExtResource("1_voyse")]
+speed = 150.0
+innac = 5.0
+fire_rate = 0.3
+slowdown = 60.0
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_gnj2g")
+
+[node name="muzzle_flash" parent="Sprite2D" index="0"]
+offset = Vector2(200, 0)

@@ -20,7 +20,7 @@ func screenshake(duration, size) -> void:
     shake_size = size
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
     offset = Vector2(randf_range(-shake_size, shake_size), randf_range(-shake_size, shake_size))
 
     if shake_ticker > 0:

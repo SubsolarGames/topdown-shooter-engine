@@ -26,5 +26,4 @@ angle_max = 360.0
 scale_amount_min = 0.02
 scale_amount_max = 0.06
 scale_amount_curve = SubResource("Curve_qfuck")
-color = Color(0.996078, 0.905882, 0.380392, 1)
 script = ExtResource("2_nm6xd")

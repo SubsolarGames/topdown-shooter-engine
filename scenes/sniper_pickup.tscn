@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://0hw76d5w8b8k"]
+
+[ext_resource type="PackedScene" uid="uid://bnklc36eyngm3" path="res://scenes/shotgun_pickup.tscn" id="1_rykwd"]
+[ext_resource type="PackedScene" uid="uid://c21lqysf5hhkj" path="res://scenes/sniper.tscn" id="2_8ldi0"]
+[ext_resource type="Shader" uid="uid://c6bxnkhwnrosf" path="res://shaders/outline.gdshader" id="2_xamvl"]
+[ext_resource type="Texture2D" uid="uid://bbxqnxpfxqkex" path="res://assets/sniper.png" id="3_xamvl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ldi0"]
+resource_local_to_scene = true
+shader = ExtResource("2_xamvl")
+shader_parameter/width = 1
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/flickering_speed = 0.0
+shader_parameter/minimal_flickering_alpha = 0.9
+
+[node name="sniper_pickup" instance=ExtResource("1_rykwd")]
+gun_scene = ExtResource("2_8ldi0")
+
+[node name="Sprite2D" parent="." index="0"]
+material = SubResource("ShaderMaterial_8ldi0")
+texture = ExtResource("3_xamvl")
+
+[node name="moveable" parent="." index="1"]
+speed = 0.0
+random_force = false

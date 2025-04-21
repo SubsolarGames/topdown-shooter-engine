@@ -12,6 +12,7 @@ size = Vector2(12, 8)
 [node name="enemy_bullet" type="Node2D"]
 script = ExtResource("1_02qb5")
 particle_scene = ExtResource("2_0rhp8")
+particle_color = Color(0.894118, 0.231373, 0.266667, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("3_02qb5")

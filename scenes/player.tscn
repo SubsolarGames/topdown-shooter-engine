@@ -11,8 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://c47821j3o5p7c" path="res://scenes/spawner.tscn" id="7_fjrip"]
 [ext_resource type="PackedScene" uid="uid://c26lri35mtwbc" path="res://scenes/dash_ghost.tscn" id="8_smehm"]
 [ext_resource type="PackedScene" uid="uid://dx137s8qt5iyj" path="res://scenes/dash_particle.tscn" id="9_ur7pv"]
-[ext_resource type="PackedScene" uid="uid://2k48cnlhg4hd" path="res://scenes/gun.tscn" id="11_d2wvv"]
 [ext_resource type="PackedScene" uid="uid://cyi562wnh0tgw" path="res://scenes/damagebox.tscn" id="12_3v2ag"]
+[ext_resource type="PackedScene" uid="uid://bchxpso63646" path="res://scenes/pistol.tscn" id="13_jej6c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d2wvv"]
 resource_local_to_scene = true
@@ -28,7 +28,7 @@ height = 14.0
 radius = 3.0
 height = 14.0
 
-[node name="player" type="Node2D" node_paths=PackedStringArray("moveable", "animated_character", "dust_particle", "spawner", "dash_particle", "healthbox", "gun")]
+[node name="player" type="Node2D" node_paths=PackedStringArray("moveable", "animated_character", "dust_particle", "spawner", "dash_particle", "healthbox")]
 z_index = 10
 script = ExtResource("1_qlg0r")
 moveable = NodePath("moveable")
@@ -37,9 +37,9 @@ dust_particle = NodePath("dust_particle")
 spawner = NodePath("spawner")
 dash_particle = NodePath("dash_particle")
 healthbox = NodePath("healthbox")
-gun = NodePath("gun")
 normal_texture = ExtResource("3_dqkch")
 weak_texture = ExtResource("6_3v2ag")
+guns = Array[PackedScene]([ExtResource("13_jej6c")])
 
 [node name="dust_particle" parent="." instance=ExtResource("6_tuyoq")]
 position = Vector2(0, 6)
@@ -95,12 +95,6 @@ obj = ExtResource("8_smehm")
 [node name="spawn_dash_ghost" type="Timer" parent="."]
 wait_time = 0.05
 one_shot = true
-
-[node name="gun" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("11_d2wvv")]
-entity = NodePath("..")
-innac = 5.0
-fire_rate = 0.02
-slowdown = 50.0
 
 [node name="damagebox" parent="." instance=ExtResource("12_3v2ag")]
 collision_mask = 0

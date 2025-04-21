@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://cyi562wnh0tgw" path="res://scenes/damagebox.tscn" id="6_0fsfn"]
 [ext_resource type="PackedScene" uid="uid://b4gpeb6b6m1cj" path="res://scenes/lootable.tscn" id="8_3q52a"]
 [ext_resource type="PackedScene" uid="uid://camajk38u4uyg" path="res://scenes/coin.tscn" id="9_aiacj"]
-[ext_resource type="PackedScene" uid="uid://ckm0yk4sp30jn" path="res://scenes/blood_pool.tscn" id="10_ddlqh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ddlqh"]
 resource_local_to_scene = true
@@ -27,6 +26,9 @@ radius = 117.154
 [sub_resource type="CircleShape2D" id="CircleShape2D_3q52a"]
 radius = 66.0076
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_aiacj"]
+radius = 163.003
+
 [node name="enemy_basic" type="Node2D" node_paths=PackedStringArray("moveable", "animated_character")]
 script = ExtResource("1_71fxq")
 moveable = NodePath("Moveable")
@@ -41,8 +43,8 @@ texture = ExtResource("3_71fxq")
 moveable = NodePath("../Moveable")
 
 [node name="Moveable" type="CharacterBody2D" parent="." node_paths=PackedStringArray("entity")]
-collision_layer = 0
-collision_mask = 2
+collision_layer = 32
+collision_mask = 34
 script = ExtResource("4_3q52a")
 entity = NodePath("..")
 accel = 5.0
@@ -83,6 +85,7 @@ shape = SubResource("CapsuleShape2D_8xnki")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_postprocessing = 1
+avoidance_enabled = true
 
 [node name="nav_update" type="Timer" parent="."]
 
@@ -103,14 +106,22 @@ disabled = true
 [node name="shoot_ray" type="RayCast2D" parent="."]
 collision_mask = 2
 
-[node name="lootable" parent="." node_paths=PackedStringArray("healthbox", "entity") instance=ExtResource("8_3q52a")]
-healthbox = NodePath("../healthbox")
+[node name="lootable" parent="." node_paths=PackedStringArray("entity", "healthbox") instance=ExtResource("8_3q52a")]
 entity = NodePath("..")
-items = Array[PackedScene]([ExtResource("9_aiacj"), ExtResource("10_ddlqh")])
-chances = Array[float]([1.0, 1.0])
-amounts = Array[int]([1, 1])
+healthbox = NodePath("../healthbox")
+items = Array[PackedScene]([ExtResource("9_aiacj")])
+chances = Array[float]([1.0])
+amounts = Array[int]([1])
 
+[node name="interest" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interest"]
+shape = SubResource("CircleShape2D_aiacj")
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="timeout" from="nav_update" to="." method="_on_nav_update_timeout"]
 [connection signal="body_entered" from="shoot_range" to="." method="_on_shoot_range_body_entered"]
 [connection signal="body_exited" from="shoot_range" to="." method="_on_shoot_range_body_exited"]
 [connection signal="body_entered" from="dash-range" to="." method="_on_dashrange_body_entered"]
+[connection signal="body_entered" from="interest" to="." method="_on_interest_body_entered"]

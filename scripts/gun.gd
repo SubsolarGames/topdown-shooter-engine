@@ -12,11 +12,13 @@ class_name Gun
 @export var fire_rate: float = 0.2
 @export var slowdown: float = 100.0
 
+var texture: Texture2D
 var target: Vector2 = Vector2.ZERO
 var offset: Vector2= Vector2.ZERO
 
 
 func _ready() -> void:
+	texture = $Sprite2D.texture
 	$fire_rate.wait_time = fire_rate
 
 
@@ -33,7 +35,7 @@ func _process(delta: float) -> void:
 
 
 func shoot() -> void:
-	if $fire_rate.time_left == 0.0:
+	if $fire_rate.time_left == 0.0 and $anim.current_animation != "appear":
 		$fire_rate.start()
 
 		$anim.speed_scale = 1.5

@@ -19,6 +19,3 @@ texture = ExtResource("3_1s6xc")
 [node name="CollisionShape2D2" parent="dash-range" index="0"]
 scale = Vector2(1.01061, 0.997843)
 disabled = false
-
-[node name="lootable" parent="." index="9"]
-amounts = Array[int]([3, 1])

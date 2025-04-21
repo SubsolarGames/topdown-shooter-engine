@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://b174cfjrxrifj"]
+
+[ext_resource type="FontFile" uid="uid://btrr6prkcchup" path="res://fonts/NotJamChunky8.ttf" id="1_ukxd2"]
+
+[resource]
+font = ExtResource("1_ukxd2")
+font_size = 8

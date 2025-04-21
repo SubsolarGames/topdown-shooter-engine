@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://2fj0hgndt22o"]
+
+[ext_resource type="PackedScene" uid="uid://2k48cnlhg4hd" path="res://scenes/gun.tscn" id="1_2sjy8"]
+[ext_resource type="Texture2D" uid="uid://oaekc33t68hk" path="res://assets/minigun.png" id="2_hxkdm"]
+
+[node name="minigun" instance=ExtResource("1_2sjy8")]
+speed = 150.0
+bullets = 1
+innac = 10.0
+spread = 0.0
+fire_rate = 0.05
+slowdown = 75.0
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_hxkdm")
+
+[node name="muzzle_flash" parent="Sprite2D" index="0"]
+offset = Vector2(100, 0)

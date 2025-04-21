@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://baqqse1b8oa8g"]
+[gd_scene load_steps=26 format=3 uid="uid://baqqse1b8oa8g"]
 
 [ext_resource type="Script" uid="uid://dm88bhbfhviqd" path="res://scripts/ui.gd" id="1_h1mc3"]
 [ext_resource type="PackedScene" uid="uid://dyulppcn6fm7h" path="res://scenes/cursor.tscn" id="1_nt7q6"]
@@ -10,11 +10,16 @@
 [ext_resource type="Script" uid="uid://xbc6hmlkxnka" path="res://scripts/hit_effect.gd" id="7_p7vwb"]
 [ext_resource type="Script" uid="uid://bkc45jku3kn03" path="res://scripts/dash_icons.gd" id="8_ktti3"]
 [ext_resource type="PackedScene" uid="uid://decoexkiu7l0a" path="res://scenes/dash_icon.tscn" id="9_cgfq5"]
+[ext_resource type="Texture2D" uid="uid://dfueravi203ja" path="res://assets/frame.png" id="9_cof4p"]
 [ext_resource type="PackedScene" uid="uid://c6t526efp1ona" path="res://scenes/empty_icon.tscn" id="10_6rmj2"]
 [ext_resource type="Texture2D" uid="uid://inbo7va15hfj" path="res://assets/coin.png" id="10_7dvkv"]
-[ext_resource type="FontFile" uid="uid://btrr6prkcchup" path="res://fonts/NotJamChunky8.ttf" id="11_vdcm2"]
+[ext_resource type="Texture2D" uid="uid://3o24fnkncj8e" path="res://assets/pistol.png" id="10_f7tlh"]
+[ext_resource type="Script" uid="uid://cjyrrr7jthrll" path="res://scripts/current_gun.gd" id="11_8k7j3"]
 [ext_resource type="Script" uid="uid://c6k223xxx6phb" path="res://scripts/coin_icon.gd" id="11_vsj0x"]
 [ext_resource type="Script" uid="uid://cngdhwsw0kadj" path="res://scripts/coins_lable.gd" id="14_qsv74"]
+[ext_resource type="LabelSettings" uid="uid://b174cfjrxrifj" path="res://fonts/default_large.tres" id="17_8k7j3"]
+[ext_resource type="Script" uid="uid://c05uuk5241an0" path="res://scripts/debug_framerate.gd" id="19_jkdwc"]
+[ext_resource type="Shader" uid="uid://brwct6p0qn8ig" path="res://shaders/transition.gdshader" id="20_rlppe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p7vwb"]
 shader = ExtResource("6_8dubc")
@@ -23,34 +28,52 @@ shader_parameter/vignette_opacity = 0.0
 shader_parameter/vignette_rgb = Color(0.635294, 0.14902, 0.2, 1)
 shader_parameter/alpha_snap_interval = 0.075
 
-[sub_resource type="LabelSettings" id="LabelSettings_7dvkv"]
-font = ExtResource("11_vdcm2")
-font_size = 8
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ycmcx"]
+shader = ExtResource("20_rlppe")
+shader_parameter/progress = 0.0
+shader_parameter/diamondPixelSize = 20.0
+
+[sub_resource type="Animation" id="Animation_rlppe"]
+resource_name = "forward"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("transiton:material:shader_parameter/progress")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ycmcx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("transiton:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ycmcx"]
+_data = {
+&"RESET": SubResource("Animation_ycmcx"),
+&"forward": SubResource("Animation_rlppe")
+}
 
 [node name="ui" type="CanvasLayer"]
 script = ExtResource("1_h1mc3")
 
 [node name="cursor" parent="." instance=ExtResource("1_nt7q6")]
-
-[node name="healthbar" type="TextureProgressBar" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 23.0
-offset_top = -28.0
-offset_right = 146.0
-offset_bottom = -25.0
-grow_vertical = 0
-size_flags_horizontal = 6
-size_flags_vertical = 6
-step = 0.0
-texture_under = ExtResource("2_yev5y")
-texture_progress = ExtResource("3_gdt2y")
-script = ExtResource("4_gdt2y")
-
-[node name="Heart" type="Sprite2D" parent="healthbar"]
-position = Vector2(-5, 0)
-texture = ExtResource("5_wm3ai")
 
 [node name="hit_effect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_p7vwb")
@@ -62,46 +85,110 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("7_p7vwb")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-custom_minimum_size = Vector2(0, 12)
-anchors_preset = 2
-anchor_top = 1.0
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 14.0
-offset_top = -20.0
-offset_right = 62.0
-offset_bottom = -8.0
-grow_vertical = 0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 2
+
+[node name="Heart" type="Sprite2D" parent="MarginContainer/VBoxContainer/HBoxContainer2/Control"]
+texture = ExtResource("5_wm3ai")
+centered = false
+
+[node name="healthbar" type="TextureProgressBar" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+step = 0.0
+texture_under = ExtResource("2_yev5y")
+texture_progress = ExtResource("3_gdt2y")
+script = ExtResource("4_gdt2y")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="dash_icons" type="HBoxContainer" parent="HBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 16)
+layout_mode = 2
+
+[node name="frame" type="Sprite2D" parent="MarginContainer/VBoxContainer/HBoxContainer/Control"]
+texture = ExtResource("9_cof4p")
+centered = false
+
+[node name="current_gun" type="Sprite2D" parent="MarginContainer/VBoxContainer/HBoxContainer/Control"]
+position = Vector2(0, -8)
+texture = ExtResource("10_f7tlh")
+centered = false
+script = ExtResource("11_8k7j3")
+
+[node name="dash_icons" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 script = ExtResource("8_ktti3")
 icon_scene = ExtResource("9_cgfq5")
 empty_scene = ExtResource("10_6rmj2")
 
-[node name="dash_icon" parent="HBoxContainer/dash_icons" instance=ExtResource("9_cgfq5")]
+[node name="dash_icon" parent="MarginContainer/VBoxContainer/HBoxContainer/dash_icons" instance=ExtResource("9_cgfq5")]
 layout_mode = 2
 
-[node name="dash_icon2" parent="HBoxContainer/dash_icons" instance=ExtResource("9_cgfq5")]
+[node name="dash_icon2" parent="MarginContainer/VBoxContainer/HBoxContainer/dash_icons" instance=ExtResource("9_cgfq5")]
 layout_mode = 2
 
-[node name="coin_icon" type="Control" parent="HBoxContainer"]
+[node name="coin_icon" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 script = ExtResource("11_vsj0x")
 
-[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/coin_icon"]
-position = Vector2(-3, 0)
+[node name="Sprite2D" type="Sprite2D" parent="MarginContainer/VBoxContainer/HBoxContainer/coin_icon"]
+position = Vector2(-3, 4)
 texture = ExtResource("10_7dvkv")
 centered = false
 
-[node name="coins" type="Label" parent="HBoxContainer"]
+[node name="coins" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 0
 text = "x56"
-label_settings = SubResource("LabelSettings_7dvkv")
+label_settings = ExtResource("17_8k7j3")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("14_qsv74")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Frame rate: "
+script = ExtResource("19_jkdwc")
+
+[node name="transiton" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ycmcx")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0941176, 0.0784314, 0.145098, 1)
+
+[node name="anim" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ycmcx")
+}
+autoplay = "forward"

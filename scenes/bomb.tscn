@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://dju5gljbiifsq"]
+
+[ext_resource type="Script" uid="uid://rqe08al7yl12" path="res://scripts/bomb.gd" id="1_84slv"]
+[ext_resource type="Texture2D" uid="uid://lyjg5vow7w4i" path="res://assets/pumkin.png" id="1_vpdcx"]
+[ext_resource type="PackedScene" uid="uid://dwlk0q87m0il6" path="res://scenes/explosion.tscn" id="2_nxi8k"]
+[ext_resource type="PackedScene" uid="uid://blnospp0aw84v" path="res://scenes/healthbox.tscn" id="3_84slv"]
+[ext_resource type="Script" uid="uid://dmvbcmmjvkh3w" path="res://scripts/moveable.gd" id="3_j15uc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j15uc"]
+size = Vector2(11, 10)
+
+[sub_resource type="Curve" id="Curve_j15uc"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.713983, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_j15uc"]
+offsets = PackedFloat32Array(0.626078, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_84slv"]
+offsets = PackedFloat32Array(0, 0.408405, 0.420259, 0.742457, 0.757543, 1)
+colors = PackedColorArray(0.968627, 0.462745, 0.133333, 1, 0.968627, 0.462745, 0.133333, 1, 0.996078, 0.682353, 0.203922, 1, 0.996078, 0.682353, 0.203922, 1, 0.996078, 0.905882, 0.380392, 1, 0.996078, 0.905882, 0.380392, 1)
+
+[node name="bomb" type="Node2D" node_paths=PackedStringArray("healthbox")]
+script = ExtResource("1_84slv")
+explosion_scene = ExtResource("2_nxi8k")
+explosion_scale = 0.5
+healthbox = NodePath("healthbox")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_vpdcx")
+
+[node name="Moveable" type="CharacterBody2D" parent="." node_paths=PackedStringArray("entity")]
+collision_layer = 0
+collision_mask = 18
+script = ExtResource("3_j15uc")
+entity = NodePath("..")
+friction = 5.0
+collide_signal = true
+always_friction = true
+bounce = true
+metadata/_custom_type_script = "uid://dmvbcmmjvkh3w"
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Moveable"]
+position = Vector2(-0.5, 2)
+shape = SubResource("RectangleShape2D_j15uc")
+
+[node name="healthbox" parent="." node_paths=PackedStringArray("entity", "moveable") instance=ExtResource("3_84slv")]
+collision_layer = 0
+collision_mask = 12
+entity = NodePath("..")
+moveable = NodePath("../Moveable")
+die_effect_mul = 1.0
+particles_color = Color(0.968627, 0.462745, 0.133333, 1)
+particle_scale = 0.15
+hit_particle_scale = 0.15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="healthbox"]
+position = Vector2(-0.5, 2)
+shape = SubResource("RectangleShape2D_j15uc")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(0, -6)
+amount = 4
+lifetime = 0.4
+direction = Vector2(0, -1)
+spread = 90.0
+gravity = Vector2(0, -100)
+initial_velocity_max = 25.0
+damping_min = 50.0
+damping_max = 50.0
+angle_max = 360.0
+scale_amount_min = 2.0
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_j15uc")
+color_ramp = SubResource("Gradient_j15uc")
+color_initial_ramp = SubResource("Gradient_84slv")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+radius = 20.0

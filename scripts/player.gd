@@ -8,21 +8,22 @@ class_name Player
 @export var spawner: Spawner
 @export var dash_particle: CPUParticles2D
 @export var healthbox: HealthBox
-@export var gun: Gun
 @export var normal_texture: Texture2D
 @export var weak_texture: Texture2D
 @export var max_dashes: int = 3
+@export var guns: Array[PackedScene]
 
+var gun: Gun
+var gun_index: int = 0
 var target_mod: float = 1.0
 var invinc: bool = false
 var dashes: int = 3
 
 
 func _ready() -> void:
+	update_gun()
 
-	Globals.slowdown(0.0, 1)
 	Globals.player = self
-
 	healthbox.take_damage.connect(on_hit)
 
 
@@ -49,6 +50,20 @@ func _process(delta: float) -> void:
 		moveable.add_friction(delta)
 
 	animated_character.animate()
+
+	if Input.is_action_just_pressed("scroll up"):
+		gun_index += 1
+		if gun_index >= len(guns):
+			gun_index = 0
+
+		update_gun()
+	
+	if Input.is_action_just_pressed("scroll down"):
+		gun_index -= 1
+		if gun_index < 0:
+			gun_index = len(guns)-1
+
+		update_gun()
 
 	if Input.is_action_just_pressed("dash") and dashes > 0:
 		if $dash_regen.time_left == 0.0:
@@ -109,3 +124,14 @@ func on_hit() -> void:
 	)
 
 	Globals.hit_effect(0.1)
+
+
+func update_gun():
+	if gun:
+		gun.queue_free()
+	
+	var inst: Gun = guns[gun_index].instantiate()
+	inst.entity = self
+	inst.look_at(get_global_mouse_position())
+	gun = inst
+	add_child(inst)
