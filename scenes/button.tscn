@@ -1,0 +1,66 @@
+[gd_scene load_steps=7 format=3 uid="uid://d3rjn8pilvf04"]
+
+[ext_resource type="FontFile" uid="uid://btrr6prkcchup" path="res://fonts/NotJamChunky8.ttf" id="1_mi6dp"]
+[ext_resource type="Script" uid="uid://b102pjnamnobx" path="res://scripts/button.gd" id="2_rhj8v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mi6dp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3q610"]
+bg_color = Color(1, 1, 1, 0.470588)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i7y4x"]
+bg_color = Color(1, 1, 1, 0.843137)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhj8v"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[node name="Button" type="Button"]
+custom_minimum_size = Vector2(0, 22)
+offset_right = 62.0
+offset_bottom = 22.0
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_mi6dp")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mi6dp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3q610")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_i7y4x")
+theme_override_styles/normal = SubResource("StyleBoxFlat_rhj8v")
+text = "example"
+script = ExtResource("2_rhj8v")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

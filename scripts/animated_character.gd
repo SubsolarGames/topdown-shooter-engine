@@ -1,6 +1,7 @@
 extends Sprite2D
 class_name AnimatedCharacter
 
+
 @export var moveable: Moveable
 
 
@@ -21,3 +22,4 @@ func animate() -> void:
 
         rotation_degrees = rad_to_deg((moveable.velocity).angle()) + 90
         scale = Vector2(0.5, 0.5) + (abs(Vector2(0, moveable.velocity.length()))/200.0)
+    

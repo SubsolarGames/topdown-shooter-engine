@@ -4,12 +4,17 @@ extends Node
 var camera: Camera2D
 var player: Player
 var ui: CanvasLayer
+var world: Node2D
 
 var hit_effect_value: float = 0.0
 var hit_perm_value: float = 0.0
 
 var coins: int = 0
 var coin_effect_pos: Vector2 = Vector2.ZERO
+
+var screenshake_mul: float = 1.0
+var sfx_volume: float = 0.0
+var music_volume: float = 0.0
 
 
 func slowdown(strength, length) -> void:
@@ -27,3 +32,7 @@ func hit_effect(length: float) -> void:
 
 func blend(amount: float) -> float:
     return 1 - (0.5 ** (amount))
+
+
+func reset():
+    coins = 0

@@ -24,7 +24,16 @@ func _ready() -> void:
 	update_gun()
 
 	Globals.player = self
+	
 	healthbox.take_damage.connect(on_hit)
+	healthbox.died.connect(func():
+		Globals.ui.get_node("anim").play_backwards("forward")
+		invinc = true
+		get_tree().create_timer(0.5).timeout.connect(func():
+			Globals.reset()
+			get_tree().reload_current_scene()
+		)
+	)
 
 
 func _process(delta: float) -> void:
@@ -52,6 +61,8 @@ func _process(delta: float) -> void:
 	animated_character.animate()
 
 	if Input.is_action_just_pressed("scroll up"):
+		AudioManager.play_sound(SoundEffect.SOUND_EFFECT_TYPE.SWITCH_GUN, position)
+
 		gun_index += 1
 		if gun_index >= len(guns):
 			gun_index = 0
@@ -59,30 +70,34 @@ func _process(delta: float) -> void:
 		update_gun()
 	
 	if Input.is_action_just_pressed("scroll down"):
+		AudioManager.play_sound(SoundEffect.SOUND_EFFECT_TYPE.SWITCH_GUN, position)
 		gun_index -= 1
 		if gun_index < 0:
 			gun_index = len(guns)-1
 
 		update_gun()
 
-	if Input.is_action_just_pressed("dash") and dashes > 0:
-		if $dash_regen.time_left == 0.0:
-			$dash_regen.start()
+	if Input.is_action_just_pressed("dash"):
+		if dashes > 0:
+			if $dash_regen.time_left == 0.0:
+				$dash_regen.start()
 
-		healthbox.invinc = true
-		get_tree().create_timer(0.0006 * moveable.dash_speed).timeout.connect(func():
-			if not invinc:
-				healthbox.invinc = false)
+			healthbox.invinc = true
+			get_tree().create_timer(0.0006 * moveable.dash_speed).timeout.connect(func():
+				if not invinc:
+					healthbox.invinc = false)
 
-		Globals.camera.screenshake(0.3, 1)
+			Globals.camera.screenshake(0.3, 1)
 
-		$spawn_dash_ghost.start()
-		moveable.dash()
+			$spawn_dash_ghost.start()
+			moveable.dash()
 
-		dashes -= 1
+			dashes -= 1
 
-		if dashes == 0:
-			$animated_character.texture = weak_texture
+			if dashes == 0:
+				$animated_character.texture = weak_texture
+		else:
+			AudioManager.play_sound(SoundEffect.SOUND_EFFECT_TYPE.DASH_FAIL, position)
 
 	if $animated_character.texture == weak_texture and dashes > 0:
 		$animated_character.texture = normal_texture

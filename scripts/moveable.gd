@@ -13,6 +13,7 @@ signal collided
 @export var slowdown: float = 0.0
 @export var bounce: bool = false
 @export var random_force: bool = false
+@export var dash_sound: SoundEffect.SOUND_EFFECT_TYPE
 
 
 enum STATES {
@@ -69,6 +70,8 @@ func add_friction(delta: float) -> void:
 
 
 func dash() -> void:
+    AudioManager.play_sound(dash_sound, entity.position)
+
     state = STATES.dashing
 
     get_tree().create_timer(0.0006 * dash_speed).timeout.connect(func():

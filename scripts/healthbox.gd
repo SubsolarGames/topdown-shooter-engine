@@ -20,6 +20,8 @@ signal take_damage
 @export var hit_particle_scale: float = 0.0
 @export var hit_particle_scene: PackedScene
 @export var destroy_when_die: bool = true
+@export var die_sound: SoundEffect.SOUND_EFFECT_TYPE
+@export var hit_sound: SoundEffect.SOUND_EFFECT_TYPE
 
 var invinc: bool = false
 var hit_dir: float = 0.0
@@ -38,6 +40,7 @@ func damage(amount: float, knockback: float) -> void:
 		moveable.add_force(Vector2(knockback, 0).rotated(hit_dir) * knockback_mul)
 
 		if health > 0:
+			AudioManager.play_sound(hit_sound, entity.position)
 			Globals.camera.screenshake(screenshake_duration, screenshake_hit)
 			Globals.slowdown(0, frame_freeze_duration)
 
@@ -50,6 +53,7 @@ func damage(amount: float, knockback: float) -> void:
 
 			take_damage.emit()
 		else:
+			AudioManager.play_sound(die_sound, entity.position)
 			Globals.camera.screenshake(screenshake_duration * die_effect_mul, screenshake_hit * die_effect_mul)
 			Globals.slowdown(0, frame_freeze_duration * die_effect_mul)
 

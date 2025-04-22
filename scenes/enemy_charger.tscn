@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7t12aa3tqtm5"]
+[gd_scene load_steps=8 format=3 uid="uid://dfqjaoa884xy8"]
 
-[ext_resource type="PackedScene" uid="uid://b7l3bmxdlhtkp" path="res://scenes/enemy_basic.tscn" id="1_d1sr8"]
+[ext_resource type="PackedScene" uid="uid://curnfdlslotff" path="res://scenes/enemy_parent.tscn" id="1_d1sr8"]
 [ext_resource type="Shader" uid="uid://cmoetrnigluwh" path="res://shaders/white.gdshader" id="2_1s6xc"]
 [ext_resource type="Texture2D" uid="uid://cly812ej46ah8" path="res://assets/enemy_charger.png" id="3_1s6xc"]
+[ext_resource type="PackedScene" uid="uid://ckm0yk4sp30jn" path="res://scenes/blood_pool.tscn" id="4_rq0nv"]
+[ext_resource type="PackedScene" uid="uid://cfrlcj2nmh4mn" path="res://scenes/coin.tscn" id="5_7nb02"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ddlqh"]
 resource_local_to_scene = true
@@ -10,12 +12,33 @@ shader = ExtResource("2_1s6xc")
 shader_parameter/active = false
 shader_parameter/alpha = 1.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1s6xc"]
+radius = 4.0
+height = 14.0
+
 [node name="enemy_charger" instance=ExtResource("1_d1sr8")]
+speed_min = 100.0
 
 [node name="animated_character" parent="." index="0"]
 material = SubResource("ShaderMaterial_ddlqh")
 texture = ExtResource("3_1s6xc")
 
+[node name="Moveable" parent="." index="1"]
+dash_sound = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Moveable" index="0"]
+shape = SubResource("CapsuleShape2D_1s6xc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="healthbox" index="0"]
+shape = SubResource("CapsuleShape2D_1s6xc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="damagebox" index="0"]
+shape = SubResource("CapsuleShape2D_1s6xc")
+
 [node name="CollisionShape2D2" parent="dash-range" index="0"]
-scale = Vector2(1.01061, 0.997843)
 disabled = false
+
+[node name="lootable" parent="." index="9"]
+items = Array[PackedScene]([ExtResource("4_rq0nv"), ExtResource("5_7nb02")])
+chances = Array[float]([1.0, 1.0])
+amounts = Array[int]([1, 3])

@@ -23,3 +23,6 @@ texture = ExtResource("4_44oi1")
 [node name="moveable" parent="." index="1"]
 speed = 0.0
 random_force = false
+
+[node name="healthbox" parent="." index="4"]
+die_sound = 0

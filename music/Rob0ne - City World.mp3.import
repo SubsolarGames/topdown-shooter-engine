@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bacme0d3w83dh"
+path="res://.godot/imported/Rob0ne - City World.mp3-2ca1d56b5438638b49c8531bece298dc.mp3str"
+
+[deps]
+
+source_file="res://music/Rob0ne - City World.mp3"
+dest_files=["res://.godot/imported/Rob0ne - City World.mp3-2ca1d56b5438638b49c8531bece298dc.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

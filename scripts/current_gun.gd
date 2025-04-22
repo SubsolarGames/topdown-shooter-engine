@@ -1,6 +1,7 @@
 extends Sprite2D
 
 
-func _process(delta):
-    if texture != Globals.player.gun.texture:
-        texture = Globals.player.gun.texture
+func _process(_delta):
+	if Globals.player:
+		if texture != Globals.player.gun.texture:
+			texture = Globals.player.gun.texture

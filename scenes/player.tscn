@@ -65,6 +65,7 @@ speed = 125.0
 accel = 15.0
 friction = 15.0
 dash_speed = 500.0
+dash_sound = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="moveable"]
 shape = SubResource("CapsuleShape2D_dqkch")
@@ -84,6 +85,9 @@ frame_freeze_duration = 0.2
 die_effect_mul = 2.0
 particle_scale = 0.5
 hit_particle_scale = 0.5
+destroy_when_die = false
+die_sound = 6
+hit_sound = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="healthbox"]
 shape = SubResource("CapsuleShape2D_y4r1p")

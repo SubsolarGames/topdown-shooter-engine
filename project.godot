@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="topdown shooter engine"
-run/main_scene="uid://o4maif022yrb"
+run/main_scene="uid://ddwbpy8celwbh"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Globals="*res://scripts/Globals.gd"
+AudioManager="*res://scenes/audio_manager.tscn"
 
 [display]
 

@@ -176,6 +176,27 @@ color = Color(0.996078, 0.905882, 0.380392, 1)
 script = ExtResource("3_aw4cw")
 on_start = false
 
+[node name="CPUParticles2D3" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 10
+lifetime = 0.75
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 400.0
+initial_velocity_max = 800.0
+angular_velocity_min = 50.0
+angular_velocity_max = 50.0
+damping_min = 1000.0
+damping_max = 1000.0
+angle_max = 360.0
+scale_amount_min = 5.0
+scale_amount_max = 10.0
+scale_amount_curve = SubResource("Curve_3el85")
+script = ExtResource("3_aw4cw")
+on_start = false
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_hbmxj")

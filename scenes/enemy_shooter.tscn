@@ -1,0 +1,55 @@
+[gd_scene load_steps=10 format=3 uid="uid://dy15w2j86hbey"]
+
+[ext_resource type="PackedScene" uid="uid://curnfdlslotff" path="res://scenes/enemy_parent.tscn" id="1_amqcw"]
+[ext_resource type="Shader" uid="uid://cmoetrnigluwh" path="res://shaders/white.gdshader" id="2_p4l84"]
+[ext_resource type="PackedScene" uid="uid://2k48cnlhg4hd" path="res://scenes/gun.tscn" id="3_mneqe"]
+[ext_resource type="Texture2D" uid="uid://c4i4wd8j8lx5g" path="res://assets/enemy_sniper.png" id="3_t4tug"]
+[ext_resource type="PackedScene" uid="uid://ckm0yk4sp30jn" path="res://scenes/blood_pool.tscn" id="4_fkp5b"]
+[ext_resource type="PackedScene" uid="uid://pqim4ti8v6xt" path="res://scenes/enemy_bullet.tscn" id="4_t4tug"]
+[ext_resource type="PackedScene" uid="uid://cfrlcj2nmh4mn" path="res://scenes/coin.tscn" id="5_c0enx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ddlqh"]
+resource_local_to_scene = true
+shader = ExtResource("2_p4l84")
+shader_parameter/active = false
+shader_parameter/alpha = 1.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mneqe"]
+radius = 4.0
+height = 14.0
+
+[node name="enemy_shooter" node_paths=PackedStringArray("gun") instance=ExtResource("1_amqcw")]
+speed_max = 75.0
+speed_min = 40.0
+gun = NodePath("gun")
+
+[node name="animated_character" parent="." index="0"]
+material = SubResource("ShaderMaterial_ddlqh")
+texture = ExtResource("3_t4tug")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Moveable" index="0"]
+shape = SubResource("CapsuleShape2D_mneqe")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="healthbox" index="0"]
+shape = SubResource("CapsuleShape2D_mneqe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="damagebox" index="0"]
+shape = SubResource("CapsuleShape2D_mneqe")
+
+[node name="CollisionShape2D" parent="shoot_range" index="0"]
+disabled = false
+
+[node name="lootable" parent="." index="9"]
+items = Array[PackedScene]([ExtResource("4_fkp5b"), ExtResource("5_c0enx")])
+chances = Array[float]([1.0, 1.0])
+amounts = Array[int]([1, 3])
+
+[node name="gun" parent="." index="11" node_paths=PackedStringArray("entity") instance=ExtResource("3_mneqe")]
+entity = NodePath("..")
+bullet_scene = ExtResource("4_t4tug")
+speed = 100.0
+bullets = 1
+innac = 5.0
+spread = 0.0
+fire_rate = 0.5
+shoot_sound = 16

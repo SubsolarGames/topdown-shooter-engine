@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://b4ecd7f3i3epv"]
+
+[ext_resource type="Script" uid="uid://bkfavqakplc0d" path="res://scripts/collectable.gd" id="1_ftjwp"]
+[ext_resource type="Script" uid="uid://bgacs1jyw0ka1" path="res://scripts/sin_move.gd" id="2_cy7d5"]
+[ext_resource type="PackedScene" uid="uid://cu2l7rfmj5aeb" path="res://scenes/moveable.tscn" id="3_7jhkb"]
+[ext_resource type="PackedScene" uid="uid://blnospp0aw84v" path="res://scenes/healthbox.tscn" id="4_ejfto"]
+[ext_resource type="PackedScene" uid="uid://by7g370qclxhm" path="res://scenes/attract_force.tscn" id="5_cooh5"]
+
+[sub_resource type="Curve" id="Curve_wnlwo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.295551, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_wnlwo"]
+offsets = PackedFloat32Array(0, 0.502155, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wnlwo"]
+
+[node name="collectable" type="Node2D" node_paths=PackedStringArray("healthbox")]
+script = ExtResource("1_ftjwp")
+healthbox = NodePath("healthbox")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+visible = false
+position = Vector2(0, -3)
+lifetime = 0.75
+spread = 180.0
+gravity = Vector2(0, -150)
+initial_velocity_min = 30.0
+initial_velocity_max = 40.0
+angular_velocity_min = 50.0
+angular_velocity_max = 100.0
+damping_min = 150.0
+damping_max = 150.0
+angle_max = 360.0
+scale_amount_min = 2.0
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_wnlwo")
+color = Color(0, 0.6, 0.858824, 1)
+color_ramp = SubResource("Gradient_wnlwo")
+
+[node name="sprite" type="Sprite2D" parent="."]
+script = ExtResource("2_cy7d5")
+sin_height = 3.0
+sin_speed = 5.0
+
+[node name="moveable" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("3_7jhkb")]
+collision_layer = 0
+collision_mask = 2
+entity = NodePath("..")
+speed = 250.0
+accel = 20.0
+friction = 10.0
+collide_signal = true
+always_friction = true
+bounce = true
+random_force = true
+
+[node name="healthbox" parent="." node_paths=PackedStringArray("entity", "moveable") instance=ExtResource("4_ejfto")]
+collision_layer = 0
+entity = NodePath("..")
+moveable = NodePath("../moveable")
+screenshake_hit = 1.0
+screenshake_duration = 0.2
+frame_freeze_duration = 0.02
+die_effect_mul = 1.0
+particles_color = Color(0.172549, 0.909804, 0.960784, 1)
+particle_scale = 0.1
+hit_particle_scale = 0.25
+
+[node name="attract_force" parent="." node_paths=PackedStringArray("entity", "moveable") instance=ExtResource("5_cooh5")]
+collision_layer = 0
+entity = NodePath("..")
+moveable = NodePath("../moveable")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attract_force"]
+shape = SubResource("CircleShape2D_wnlwo")

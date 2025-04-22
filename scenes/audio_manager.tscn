@@ -1,0 +1,170 @@
+[gd_scene load_steps=39 format=3 uid="uid://0cbdyn2tr6hv"]
+
+[ext_resource type="Script" uid="uid://civdn5iuf5ky" path="res://scripts/audio_manager.gd" id="1_8qd8g"]
+[ext_resource type="Script" uid="uid://dwwff3o033wh6" path="res://scripts/sound_effect.gd" id="2_liach"]
+[ext_resource type="AudioStream" uid="uid://bqpxb7rs4fnjt" path="res://sfx/button.wav" id="3_3asnw"]
+[ext_resource type="AudioStream" uid="uid://dj62bhdt5nn0s" path="res://sfx/coinget.wav" id="4_hssp1"]
+[ext_resource type="AudioStream" uid="uid://hxkmtdll7ghi" path="res://sfx/heartget.wav" id="5_8b11i"]
+[ext_resource type="AudioStream" uid="uid://dvnjbt6i3puui" path="res://sfx/dash.wav" id="6_u6qdm"]
+[ext_resource type="AudioStream" uid="uid://cqhrbxr6aauwe" path="res://sfx/dash_fail.wav" id="7_f6jxr"]
+[ext_resource type="AudioStream" uid="uid://c8h18n0o2iv75" path="res://sfx/enemy_dash.wav" id="8_ovaav"]
+[ext_resource type="AudioStream" uid="uid://dxt8a3npsu525" path="res://sfx/player_die.wav" id="9_thanh"]
+[ext_resource type="AudioStream" uid="uid://bijeb0bxb5wvt" path="res://sfx/enemy_die.wav" id="10_nplbh"]
+[ext_resource type="AudioStream" uid="uid://dt04qtajqag7a" path="res://sfx/player_take_damage.wav" id="11_24ib7"]
+[ext_resource type="AudioStream" uid="uid://bt4a2iuxadeyq" path="res://sfx/enemy_take_damage.wav" id="12_kr8a2"]
+[ext_resource type="AudioStream" uid="uid://cf3wlwnmemwrg" path="res://sfx/rock_take_damage.wav" id="13_2agnf"]
+[ext_resource type="AudioStream" uid="uid://cy45n8h2gtbls" path="res://sfx/explosion.wav" id="14_yt2vs"]
+[ext_resource type="AudioStream" uid="uid://dogqhrrhfndkr" path="res://sfx/open_chest.wav" id="15_2fqsb"]
+[ext_resource type="AudioStream" uid="uid://dkq1urcv8taek" path="res://sfx/open_portal.wav" id="16_fcxyy"]
+[ext_resource type="AudioStream" uid="uid://nel4rtkgdwl8" path="res://sfx/pickup_gun.wav" id="17_1y43m"]
+[ext_resource type="AudioStream" uid="uid://cy4f1ajjo3idk" path="res://sfx/shoot.wav" id="18_n1t8p"]
+[ext_resource type="AudioStream" uid="uid://bkhsdbi8lkxch" path="res://sfx/shoot2.wav" id="19_bne8e"]
+[ext_resource type="AudioStream" uid="uid://dvhugckf3xj2g" path="res://sfx/switch_gun.wav" id="20_c6r4u"]
+
+[sub_resource type="Resource" id="Resource_liach"]
+script = ExtResource("2_liach")
+type = 0
+sound_effect = ExtResource("3_3asnw")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_3asnw"]
+script = ExtResource("2_liach")
+type = 1
+sound_effect = ExtResource("4_hssp1")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_785fq"]
+script = ExtResource("2_liach")
+type = 2
+sound_effect = ExtResource("5_8b11i")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_26ibh"]
+script = ExtResource("2_liach")
+type = 3
+sound_effect = ExtResource("6_u6qdm")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_d55hy"]
+script = ExtResource("2_liach")
+type = 4
+sound_effect = ExtResource("7_f6jxr")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_1cnjy"]
+script = ExtResource("2_liach")
+type = 5
+sound_effect = ExtResource("8_ovaav")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_2igfy"]
+script = ExtResource("2_liach")
+type = 6
+sound_effect = ExtResource("9_thanh")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_gi52w"]
+script = ExtResource("2_liach")
+type = 7
+sound_effect = ExtResource("10_nplbh")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_g71vj"]
+script = ExtResource("2_liach")
+type = 8
+sound_effect = ExtResource("11_24ib7")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_ladlq"]
+script = ExtResource("2_liach")
+type = 9
+sound_effect = ExtResource("12_kr8a2")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_ku15p"]
+script = ExtResource("2_liach")
+type = 10
+sound_effect = ExtResource("13_2agnf")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_sa6p2"]
+script = ExtResource("2_liach")
+type = 11
+sound_effect = ExtResource("14_yt2vs")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_opu6i"]
+script = ExtResource("2_liach")
+type = 12
+sound_effect = ExtResource("15_2fqsb")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_t2ybr"]
+script = ExtResource("2_liach")
+type = 13
+sound_effect = ExtResource("16_fcxyy")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_cewst"]
+script = ExtResource("2_liach")
+type = 14
+sound_effect = ExtResource("17_1y43m")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_g5lra"]
+script = ExtResource("2_liach")
+type = 15
+sound_effect = ExtResource("18_n1t8p")
+volume = -5.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_ccetw"]
+script = ExtResource("2_liach")
+type = 16
+sound_effect = ExtResource("19_bne8e")
+volume = 0.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[sub_resource type="Resource" id="Resource_bsfxv"]
+script = ExtResource("2_liach")
+type = 17
+sound_effect = ExtResource("20_c6r4u")
+volume = -5.0
+pitch_var = 0.2
+metadata/_custom_type_script = "uid://dwwff3o033wh6"
+
+[node name="AudioManager" type="Node2D"]
+script = ExtResource("1_8qd8g")
+sound_effects = Array[ExtResource("2_liach")]([SubResource("Resource_liach"), SubResource("Resource_3asnw"), SubResource("Resource_785fq"), SubResource("Resource_26ibh"), SubResource("Resource_d55hy"), SubResource("Resource_1cnjy"), SubResource("Resource_2igfy"), SubResource("Resource_gi52w"), SubResource("Resource_g71vj"), SubResource("Resource_ladlq"), SubResource("Resource_ku15p"), SubResource("Resource_sa6p2"), SubResource("Resource_opu6i"), SubResource("Resource_t2ybr"), SubResource("Resource_cewst"), SubResource("Resource_g5lra"), SubResource("Resource_ccetw"), SubResource("Resource_bsfxv")])

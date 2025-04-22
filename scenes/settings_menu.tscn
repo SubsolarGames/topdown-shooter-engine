@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3 uid="uid://bk3oct862m75x"]
+
+[ext_resource type="PackedScene" uid="uid://uwdorlbstoia" path="res://scenes/menu_parent.tscn" id="1_05p07"]
+[ext_resource type="LabelSettings" uid="uid://dherdqdbwalme" path="res://fonts/menu_size.tres" id="2_cr101"]
+[ext_resource type="Script" uid="uid://cltkao8wik7ir" path="res://scripts/settings_menu.gd" id="2_lwwgp"]
+[ext_resource type="PackedScene" uid="uid://c5qb6gt3jrrik" path="res://scenes/slider.tscn" id="3_wswnh"]
+[ext_resource type="PackedScene" uid="uid://d3rjn8pilvf04" path="res://scenes/button.tscn" id="4_labj1"]
+
+[node name="settings_menu" instance=ExtResource("1_05p07")]
+script = ExtResource("2_lwwgp")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" index="1"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer" index="0"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer" index="0"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "SEttings"
+label_settings = ExtResource("2_cr101")
+horizontal_alignment = 1
+
+[node name="slider" parent="CanvasLayer/MarginContainer/VBoxContainer" index="1" instance=ExtResource("3_wswnh")]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "screenshake"
+
+[node name="slider2" parent="CanvasLayer/MarginContainer/VBoxContainer" index="2" instance=ExtResource("3_wswnh")]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "music"
+
+[node name="slider3" parent="CanvasLayer/MarginContainer/VBoxContainer" index="3" instance=ExtResource("3_wswnh")]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "sfx"
+
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer/VBoxContainer" index="4"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Button" parent="CanvasLayer/MarginContainer/VBoxContainer" index="5" instance=ExtResource("4_labj1")]
+layout_mode = 2
+text = "Return"
+
+[connection signal="new_value" from="CanvasLayer/MarginContainer/VBoxContainer/slider" to="." method="_on_slider_new_value"]
+[connection signal="new_value" from="CanvasLayer/MarginContainer/VBoxContainer/slider2" to="." method="_on_slider_2_new_value"]
+[connection signal="new_value" from="CanvasLayer/MarginContainer/VBoxContainer/slider3" to="." method="_on_slider_3_new_value"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

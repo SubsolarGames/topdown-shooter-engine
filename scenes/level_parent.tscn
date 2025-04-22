@@ -14,4 +14,7 @@ script = ExtResource("1_1m8kj")
 [node name="exit" parent="." instance=ExtResource("3_dghoi")]
 position = Vector2(-2, 0)
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+autoplay = true
+
 [connection signal="exited" from="exit" to="." method="_on_exit_exited"]

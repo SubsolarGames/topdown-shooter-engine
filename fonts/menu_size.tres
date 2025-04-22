@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dherdqdbwalme"]
+
+[ext_resource type="FontFile" uid="uid://dc05ng6jal37l" path="res://fonts/Evil Empire.otf" id="1_o373b"]
+
+[resource]
+font = ExtResource("1_o373b")
+font_size = 48

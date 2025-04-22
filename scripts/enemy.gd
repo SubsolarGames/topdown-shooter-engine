@@ -59,16 +59,16 @@ func _on_nav_update_timeout() -> void:
 		$NavigationAgent2D.target_position = start_pos + Vector2(randf_range(-50, 50), randf_range(-50, 50))
 
 
-func _on_shoot_range_body_entered(body: Node2D) -> void:
+func _on_shoot_range_body_entered(_body: Node2D) -> void:
 	if gun:
 		state = STATES.shoot
 
 
-func _on_shoot_range_body_exited(body: Node2D) -> void:
+func _on_shoot_range_body_exited(_body: Node2D) -> void:
 	state = STATES.run
 
 
-func _on_dashrange_body_entered(body: Node2D) -> void:
+func _on_dashrange_body_entered(_body: Node2D) -> void:
 	moveable.dash()
 
 

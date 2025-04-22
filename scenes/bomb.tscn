@@ -54,6 +54,7 @@ die_effect_mul = 1.0
 particles_color = Color(0.968627, 0.462745, 0.133333, 1)
 particle_scale = 0.15
 hit_particle_scale = 0.15
+die_sound = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="healthbox"]
 position = Vector2(-0.5, 2)

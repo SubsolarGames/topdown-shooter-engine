@@ -52,7 +52,7 @@ offset_left = -51.0
 offset_top = -27.0
 offset_right = 54.0
 offset_bottom = -4.0
-text = "[e] to interact"
+text = "[E] to interact"
 label_settings = ExtResource("5_o0ci7")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -67,6 +67,7 @@ frame_freeze_duration = 0.02
 die_effect_mul = 1.0
 particle_scale = 0.1
 hit_particle_scale = 0.1
+die_sound = 14
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://baqqse1b8oa8g"]
+[gd_scene load_steps=27 format=3 uid="uid://baqqse1b8oa8g"]
 
 [ext_resource type="Script" uid="uid://dm88bhbfhviqd" path="res://scripts/ui.gd" id="1_h1mc3"]
 [ext_resource type="PackedScene" uid="uid://dyulppcn6fm7h" path="res://scenes/cursor.tscn" id="1_nt7q6"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://boocsccs1yiai" path="res://assets/healthbar_fill.png" id="3_gdt2y"]
 [ext_resource type="Script" uid="uid://dok3b2oogb5gt" path="res://scripts/healthbar.gd" id="4_gdt2y"]
 [ext_resource type="Texture2D" uid="uid://cfhqiih5kyonl" path="res://assets/heart.png" id="5_wm3ai"]
+[ext_resource type="Script" uid="uid://her1eggn28ew" path="res://scripts/game_ui.gd" id="5_ycmcx"]
 [ext_resource type="Shader" uid="uid://chqo858gf1yuv" path="res://shaders/vignette.gdshader" id="6_8dubc"]
 [ext_resource type="Script" uid="uid://xbc6hmlkxnka" path="res://scripts/hit_effect.gd" id="7_p7vwb"]
 [ext_resource type="Script" uid="uid://bkc45jku3kn03" path="res://scripts/dash_icons.gd" id="8_ktti3"]
@@ -33,6 +34,21 @@ shader = ExtResource("20_rlppe")
 shader_parameter/progress = 0.0
 shader_parameter/diamondPixelSize = 20.0
 
+[sub_resource type="Animation" id="Animation_ycmcx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("transiton:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="Animation" id="Animation_rlppe"]
 resource_name = "forward"
 length = 0.5
@@ -47,21 +63,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [1.0, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_ycmcx"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("transiton:material:shader_parameter/progress")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ycmcx"]
@@ -91,26 +92,28 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="game_ui" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
+script = ExtResource("5_ycmcx")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/game_ui"]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Control" type="Control" parent="MarginContainer/game_ui/HBoxContainer2"]
 custom_minimum_size = Vector2(8, 8)
 layout_mode = 2
 
-[node name="Heart" type="Sprite2D" parent="MarginContainer/VBoxContainer/HBoxContainer2/Control"]
+[node name="Heart" type="Sprite2D" parent="MarginContainer/game_ui/HBoxContainer2/Control"]
 texture = ExtResource("5_wm3ai")
 centered = false
 
-[node name="healthbar" type="TextureProgressBar" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="healthbar" type="TextureProgressBar" parent="MarginContainer/game_ui/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
@@ -119,48 +122,48 @@ texture_under = ExtResource("2_yev5y")
 texture_progress = ExtResource("3_gdt2y")
 script = ExtResource("4_gdt2y")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/game_ui"]
 custom_minimum_size = Vector2(0, 12)
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/game_ui/HBoxContainer"]
 custom_minimum_size = Vector2(32, 16)
 layout_mode = 2
 
-[node name="frame" type="Sprite2D" parent="MarginContainer/VBoxContainer/HBoxContainer/Control"]
+[node name="frame" type="Sprite2D" parent="MarginContainer/game_ui/HBoxContainer/Control"]
 texture = ExtResource("9_cof4p")
 centered = false
 
-[node name="current_gun" type="Sprite2D" parent="MarginContainer/VBoxContainer/HBoxContainer/Control"]
+[node name="current_gun" type="Sprite2D" parent="MarginContainer/game_ui/HBoxContainer/Control"]
 position = Vector2(0, -8)
 texture = ExtResource("10_f7tlh")
 centered = false
 script = ExtResource("11_8k7j3")
 
-[node name="dash_icons" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="dash_icons" type="HBoxContainer" parent="MarginContainer/game_ui/HBoxContainer"]
 custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 script = ExtResource("8_ktti3")
 icon_scene = ExtResource("9_cgfq5")
 empty_scene = ExtResource("10_6rmj2")
 
-[node name="dash_icon" parent="MarginContainer/VBoxContainer/HBoxContainer/dash_icons" instance=ExtResource("9_cgfq5")]
+[node name="dash_icon" parent="MarginContainer/game_ui/HBoxContainer/dash_icons" instance=ExtResource("9_cgfq5")]
 layout_mode = 2
 
-[node name="dash_icon2" parent="MarginContainer/VBoxContainer/HBoxContainer/dash_icons" instance=ExtResource("9_cgfq5")]
+[node name="dash_icon2" parent="MarginContainer/game_ui/HBoxContainer/dash_icons" instance=ExtResource("9_cgfq5")]
 layout_mode = 2
 
-[node name="coin_icon" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="coin_icon" type="Control" parent="MarginContainer/game_ui/HBoxContainer"]
 layout_mode = 2
 script = ExtResource("11_vsj0x")
 
-[node name="Sprite2D" type="Sprite2D" parent="MarginContainer/VBoxContainer/HBoxContainer/coin_icon"]
+[node name="Sprite2D" type="Sprite2D" parent="MarginContainer/game_ui/HBoxContainer/coin_icon"]
 position = Vector2(-3, 4)
 texture = ExtResource("10_7dvkv")
 centered = false
 
-[node name="coins" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="coins" type="Label" parent="MarginContainer/game_ui/HBoxContainer"]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_horizontal = 2
@@ -185,6 +188,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.0941176, 0.0784314, 0.145098, 1)
 
 [node name="anim" type="AnimationPlayer" parent="."]

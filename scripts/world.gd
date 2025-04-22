@@ -7,6 +7,7 @@ var level: int = 0
 
 
 func _ready() -> void:
+	Globals.world = self
 	call_deferred("update_level")
 
 

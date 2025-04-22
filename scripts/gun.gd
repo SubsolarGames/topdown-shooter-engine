@@ -11,6 +11,7 @@ class_name Gun
 @export var spread: float = 30.0
 @export var fire_rate: float = 0.2
 @export var slowdown: float = 100.0
+@export var shoot_sound: SoundEffect.SOUND_EFFECT_TYPE = SoundEffect.SOUND_EFFECT_TYPE.SHOOT
 
 var texture: Texture2D
 var target: Vector2 = Vector2.ZERO
@@ -22,7 +23,7 @@ func _ready() -> void:
 	$fire_rate.wait_time = fire_rate
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	offset = $Sprite2D.offset.rotated(rotation)
 
 	look_at(target)
@@ -36,6 +37,7 @@ func _process(delta: float) -> void:
 
 func shoot() -> void:
 	if $fire_rate.time_left == 0.0 and $anim.current_animation != "appear":
+		AudioManager.play_sound(shoot_sound, position)
 		$fire_rate.start()
 
 		$anim.speed_scale = 1.5

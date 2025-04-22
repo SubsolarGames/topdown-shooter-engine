@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddwbpy8celwbh"]
+
+[ext_resource type="PackedScene" uid="uid://uwdorlbstoia" path="res://scenes/menu_parent.tscn" id="1_l6cm7"]
+[ext_resource type="Texture2D" uid="uid://c2ds6x066bhth" path="res://assets/title.png" id="2_bqqt6"]
+[ext_resource type="Script" uid="uid://cb8p3v8pebqx1" path="res://scripts/main_menu.gd" id="2_wu84c"]
+[ext_resource type="PackedScene" uid="uid://d3rjn8pilvf04" path="res://scenes/button.tscn" id="3_8ln24"]
+
+[node name="main_menu" instance=ExtResource("1_l6cm7")]
+script = ExtResource("2_wu84c")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer" index="1"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bqqt6")
+stretch_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" index="2"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 125
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 125
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer" index="0"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 10
+
+[node name="Button" parent="CanvasLayer/MarginContainer/VBoxContainer" index="0" instance=ExtResource("3_8ln24")]
+layout_mode = 2
+text = "start"
+
+[node name="Button2" parent="CanvasLayer/MarginContainer/VBoxContainer" index="1" instance=ExtResource("3_8ln24")]
+layout_mode = 2
+text = "settings"
+
+[node name="Button3" parent="CanvasLayer/MarginContainer/VBoxContainer" index="2" instance=ExtResource("3_8ln24")]
+layout_mode = 2
+text = "quit
+"
+
+[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/Button2" to="." method="_on_button_2_pressed"]

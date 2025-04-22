@@ -1,0 +1,114 @@
+[gd_scene load_steps=13 format=3 uid="uid://curnfdlslotff"]
+
+[ext_resource type="Script" uid="uid://cj3gjv46ptedt" path="res://scripts/enemy.gd" id="1_i6c7g"]
+[ext_resource type="PackedScene" uid="uid://hddpb5jaa5nw" path="res://scenes/animated_character.tscn" id="2_62phj"]
+[ext_resource type="Shader" uid="uid://cmoetrnigluwh" path="res://shaders/white.gdshader" id="3_fxu8a"]
+[ext_resource type="Script" uid="uid://dmvbcmmjvkh3w" path="res://scripts/moveable.gd" id="4_crsmf"]
+[ext_resource type="PackedScene" uid="uid://blnospp0aw84v" path="res://scenes/healthbox.tscn" id="5_ldmcr"]
+[ext_resource type="PackedScene" uid="uid://cyi562wnh0tgw" path="res://scenes/damagebox.tscn" id="6_lb133"]
+[ext_resource type="PackedScene" uid="uid://b4gpeb6b6m1cj" path="res://scenes/lootable.tscn" id="7_d50ll"]
+[ext_resource type="PackedScene" uid="uid://ckm0yk4sp30jn" path="res://scenes/blood_pool.tscn" id="8_4idab"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ddlqh"]
+resource_local_to_scene = true
+shader = ExtResource("3_fxu8a")
+shader_parameter/active = false
+shader_parameter/alpha = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_71fxq"]
+radius = 117.154
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3q52a"]
+radius = 66.0076
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aiacj"]
+radius = 163.003
+
+[node name="enemy_parent" type="Node2D" node_paths=PackedStringArray("moveable", "animated_character")]
+script = ExtResource("1_i6c7g")
+moveable = NodePath("Moveable")
+animated_character = NodePath("animated_character")
+innac = 25.0
+speed_max = 150.0
+speed_min = 50.0
+
+[node name="animated_character" parent="." node_paths=PackedStringArray("moveable") instance=ExtResource("2_62phj")]
+material = SubResource("ShaderMaterial_ddlqh")
+moveable = NodePath("../Moveable")
+
+[node name="Moveable" type="CharacterBody2D" parent="." node_paths=PackedStringArray("entity")]
+collision_layer = 32
+collision_mask = 34
+script = ExtResource("4_crsmf")
+entity = NodePath("..")
+accel = 5.0
+friction = 5.0
+dash_speed = 500.0
+metadata/_custom_type_script = "uid://dmvbcmmjvkh3w"
+
+[node name="healthbox" parent="." node_paths=PackedStringArray("entity", "moveable", "sprite") instance=ExtResource("5_ldmcr")]
+collision_layer = 0
+collision_mask = 4
+entity = NodePath("..")
+moveable = NodePath("../Moveable")
+sprite = NodePath("../animated_character")
+max_health = 5.0
+health = 5.0
+screenshake_hit = 1.0
+screenshake_duration = 0.2
+frame_freeze_duration = 0.025
+die_effect_mul = 1.5
+particles_color = Color(0.894118, 0.231373, 0.266667, 1)
+particle_scale = 0.2
+hit_particle_scale = 0.2
+die_sound = 7
+hit_sound = 9
+
+[node name="damagebox" parent="." instance=ExtResource("6_lb133")]
+collision_layer = 8
+collision_mask = 0
+damage = 1.0
+knockback = 100.0
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
+avoidance_enabled = true
+
+[node name="nav_update" type="Timer" parent="."]
+
+[node name="shoot_range" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="shoot_range"]
+shape = SubResource("CircleShape2D_71fxq")
+disabled = true
+
+[node name="dash-range" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="dash-range"]
+shape = SubResource("CircleShape2D_3q52a")
+disabled = true
+
+[node name="shoot_ray" type="RayCast2D" parent="."]
+collision_mask = 2
+
+[node name="lootable" parent="." node_paths=PackedStringArray("entity", "healthbox") instance=ExtResource("7_d50ll")]
+entity = NodePath("..")
+healthbox = NodePath("../healthbox")
+items = Array[PackedScene]([ExtResource("8_4idab")])
+chances = Array[float]([1.0])
+amounts = Array[int]([1])
+
+[node name="interest" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interest"]
+shape = SubResource("CircleShape2D_aiacj")
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
+[connection signal="timeout" from="nav_update" to="." method="_on_nav_update_timeout"]
+[connection signal="body_entered" from="shoot_range" to="." method="_on_shoot_range_body_entered"]
+[connection signal="body_exited" from="shoot_range" to="." method="_on_shoot_range_body_exited"]
+[connection signal="body_entered" from="dash-range" to="." method="_on_dashrange_body_entered"]
+[connection signal="body_entered" from="interest" to="." method="_on_interest_body_entered"]

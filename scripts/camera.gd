@@ -7,7 +7,6 @@ extends Camera2D
 
 var shake_ticker: float = 0.0
 var shake_size: float = 0.0
-
 var target_pos: Vector2 = Vector2.ZERO
 
 
@@ -17,20 +16,19 @@ func _ready() -> void:
 
 func screenshake(duration, size) -> void:
     shake_ticker += max(duration - shake_ticker, 0)
-    shake_size = size
+    shake_size = max(size, shake_size)
 
 
 func _physics_process(delta: float) -> void:
-    offset = Vector2(randf_range(-shake_size, shake_size), randf_range(-shake_size, shake_size))
+    offset = Vector2(randf_range(-shake_size, shake_size), randf_range(-shake_size, shake_size)) * Globals.screenshake_mul
 
     if shake_ticker > 0:
         shake_ticker -= delta
     else:
         shake_size = 0.0
 
-
     if target != null:
-        target_pos = (cursor_weight * get_global_mouse_position()) + ((1.0-cursor_weight) * target.position)
+        target_pos = (cursor_weight * get_global_mouse_position()) + ((1.0-cursor_weight) * target.global_position)
     else:
         target_pos = (cursor_weight * get_global_mouse_position()) + ((1.0-cursor_weight) * Vector2.ZERO)
 

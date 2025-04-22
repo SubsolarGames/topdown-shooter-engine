@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://uwdorlbstoia"]
+
+[ext_resource type="Texture2D" uid="uid://cb1bb2rcmroq7" path="res://assets/triangle_particle.png" id="1_x3jex"]
+[ext_resource type="Script" uid="uid://dod85u57blc3n" path="res://scripts/menu_parent.gd" id="1_xhncf"]
+[ext_resource type="PackedScene" uid="uid://baqqse1b8oa8g" path="res://scenes/ui.tscn" id="4_2wjdu"]
+[ext_resource type="PackedScene" uid="uid://cail1nhbrwdif" path="res://scenes/camera.tscn" id="5_16aoj"]
+
+[sub_resource type="Curve" id="Curve_2sfwo"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.452381, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_vtnod"]
+offsets = PackedFloat32Array(0, 0.979075, 1)
+colors = PackedColorArray(0.14902, 0.168627, 0.266667, 1, 0.14902, 0.168627, 0.266667, 1, 0.14902, 0.168627, 0.266667, 0)
+
+[node name="menu_parent" type="Node2D"]
+script = ExtResource("1_xhncf")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -0.5
+offset_right = 0.5
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="CanvasLayer/Control"]
+amount = 50
+texture = ExtResource("1_x3jex")
+lifetime = 2.0
+emission_shape = 3
+emission_rect_extents = Vector2(213, 1)
+gravity = Vector2(0, -100)
+angular_velocity_min = 50.0
+angular_velocity_max = 50.0
+orbit_velocity_min = 0.3
+orbit_velocity_max = 0.3
+angle_max = 360.0
+scale_amount_min = 0.05
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_2sfwo")
+color_ramp = SubResource("Gradient_vtnod")
+
+[node name="ui" parent="." instance=ExtResource("4_2wjdu")]
+
+[node name="camera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("5_16aoj")]
+target = NodePath("../CanvasLayer/Control/CPUParticles2D")
