@@ -3,6 +3,7 @@ extends ColorRect
 
 var alpha_value: float = 0.0
 
+
 func _process(delta: float) -> void:
     if Globals.hit_effect_value == 1.0:
         alpha_value = 1.0

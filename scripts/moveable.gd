@@ -1,6 +1,7 @@
 extends CharacterBody2D
 class_name Moveable
 
+
 signal collided
 
 @export var entity: Node
@@ -14,7 +15,6 @@ signal collided
 @export var bounce: bool = false
 @export var random_force: bool = false
 @export var dash_sound: SoundEffect.SOUND_EFFECT_TYPE
-
 
 enum STATES {
     moving,
@@ -55,7 +55,6 @@ func accel_direction(direction: Vector2, delta: float):
         state = STATES.moving
     last_dir = direction
     velocity = lerp(velocity, direction.normalized() * (speed-slowdown), Globals.blend(accel * delta))
-
 
 
 func add_force(force: Vector2):

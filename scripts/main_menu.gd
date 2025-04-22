@@ -1,8 +1,6 @@
 extends MenuParent
 
 
-
-
 func _on_button_pressed() -> void:
 	change_scene("world")
 

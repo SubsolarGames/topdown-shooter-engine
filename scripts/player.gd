@@ -5,7 +5,7 @@ class_name Player
 @export var moveable: Moveable
 @export var animated_character: AnimatedCharacter
 @export var dust_particle: CPUParticles2D
-@export var spawner: Spawner
+@export var dash_effect_scene: PackedScene
 @export var dash_particle: CPUParticles2D
 @export var healthbox: HealthBox
 @export var normal_texture: Texture2D
@@ -26,29 +26,28 @@ func _ready() -> void:
 	Globals.player = self
 	
 	healthbox.take_damage.connect(on_hit)
-	healthbox.died.connect(func():
-		Globals.ui.get_node("anim").play_backwards("forward")
-		invinc = true
-		get_tree().create_timer(0.5).timeout.connect(func():
-			Globals.reset()
-			get_tree().reload_current_scene()
-		)
-	)
+	healthbox.died.connect(on_die)
 
 
-func _process(delta: float) -> void:
-	modulate.a = lerp(modulate.a, target_mod, 10 * delta)
-	animated_character.material.set_shader_parameter("alpha", modulate.a)
-	if invinc:
-		if modulate.a > target_mod - 0.05 and modulate.a < target_mod + 0.05:
-			if target_mod == 1.0:
-				target_mod = 0.0
-			elif target_mod == 0.0:
-				target_mod = 1.0
-			
-
+func _process(delta: float) -> void:		
 	gun.target = get_global_mouse_position()
 	
+	move_around(delta)
+
+	animated_character.animate()
+	animate_modulate(delta)
+
+	if $animated_character.texture == weak_texture and dashes > 0:
+		$animated_character.texture = normal_texture
+
+	scroll_guns()
+
+	dash_action()
+
+	shoot_action()
+
+
+func move_around(delta: float) -> void:
 	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 
 	if direction != Vector2.ZERO:
@@ -58,25 +57,32 @@ func _process(delta: float) -> void:
 		dust_particle.emitting = false
 		moveable.add_friction(delta)
 
-	animated_character.animate()
 
-	if Input.is_action_just_pressed("scroll up"):
-		AudioManager.play_sound(SoundEffect.SOUND_EFFECT_TYPE.SWITCH_GUN, position)
-
-		gun_index += 1
-		if gun_index >= len(guns):
-			gun_index = 0
-
-		update_gun()
+func shoot_action() -> void:
+	if Input.is_action_pressed("shoot"):
+		gun.shoot()
+		moveable.slowdown = gun.slowdown
+	else:
+		moveable.slowdown = 0
 	
-	if Input.is_action_just_pressed("scroll down"):
-		AudioManager.play_sound(SoundEffect.SOUND_EFFECT_TYPE.SWITCH_GUN, position)
-		gun_index -= 1
-		if gun_index < 0:
-			gun_index = len(guns)-1
+	if moveable.state == moveable.STATES.dashing:
+		dash_particle.rotation = animated_character.rotation - deg_to_rad(90)
+		dash_particle.emitting = true
 
-		update_gun()
+		if $spawn_dash_ghost.time_left == 0:
+			$spawn_dash_ghost.start()
 
+			var dash_inst: Node2D = dash_effect_scene.instantiate()
+			dash_inst.rotation = animated_character.rotation
+			dash_inst.position = position
+			dash_inst.scale = animated_character.scale
+			get_parent().add_child(dash_inst)
+	else:
+		dash_particle.rotation = moveable.velocity.angle()
+		dash_particle.emitting = false
+
+
+func dash_action() -> void:
 	if Input.is_action_just_pressed("dash"):
 		if dashes > 0:
 			if $dash_regen.time_left == 0.0:
@@ -99,25 +105,35 @@ func _process(delta: float) -> void:
 		else:
 			AudioManager.play_sound(SoundEffect.SOUND_EFFECT_TYPE.DASH_FAIL, position)
 
-	if $animated_character.texture == weak_texture and dashes > 0:
-		$animated_character.texture = normal_texture
 
-	if Input.is_action_pressed("shoot"):
-		gun.shoot()
-		moveable.slowdown = gun.slowdown
-	else:
-		moveable.slowdown = 0
+func animate_modulate(delta: float) -> void:
+	modulate.a = lerp(modulate.a, target_mod, 10 * delta)
+	animated_character.material.set_shader_parameter("alpha", modulate.a)
+	if invinc:
+		if modulate.a > target_mod - 0.05 and modulate.a < target_mod + 0.05:
+			if target_mod == 1.0:
+				target_mod = 0.0
+			elif target_mod == 0.0:
+				target_mod = 1.0
+
+
+func scroll_guns() -> void:
+	if Input.is_action_just_pressed("scroll up"):
+		AudioManager.play_sound(SoundEffect.SOUND_EFFECT_TYPE.SWITCH_GUN, position)
+
+		gun_index += 1
+		if gun_index >= len(guns):
+			gun_index = 0
+
+		update_gun()
 	
-	if moveable.state == moveable.STATES.dashing:
-		dash_particle.rotation = animated_character.rotation - deg_to_rad(90)
-		dash_particle.emitting = true
+	if Input.is_action_just_pressed("scroll down"):
+		AudioManager.play_sound(SoundEffect.SOUND_EFFECT_TYPE.SWITCH_GUN, position)
+		gun_index -= 1
+		if gun_index < 0:
+			gun_index = len(guns)-1
 
-		if $spawn_dash_ghost.time_left == 0:
-			$spawn_dash_ghost.start()
-			spawner.spawn_obj(global_position, animated_character.rotation, animated_character.scale)
-	else:
-		dash_particle.rotation = moveable.velocity.angle()
-		dash_particle.emitting = false
+		update_gun()
 
 
 func _on_dash_regen_timeout() -> void:
@@ -139,6 +155,15 @@ func on_hit() -> void:
 	)
 
 	Globals.hit_effect(0.1)
+
+
+func on_die():
+	Globals.ui.get_node("anim").play_backwards("forward")
+	invinc = true
+	get_tree().create_timer(0.5).timeout.connect(func():
+		Globals.reset()
+		get_tree().reload_current_scene()
+	)
 
 
 func update_gun():

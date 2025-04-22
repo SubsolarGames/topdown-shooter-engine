@@ -6,6 +6,7 @@ extends Node2D
 
 func _ready() -> void:
     AudioManager.play_sound(SoundEffect.SOUND_EFFECT_TYPE.EXPLOSION, position)
+    
     $CPUParticles2D.effect_scale = effect_scale
     $CPUParticles2D.setoff()
 

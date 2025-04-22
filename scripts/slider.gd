@@ -14,7 +14,7 @@ func _on_h_slider_drag_started() -> void:
     AudioManager.play_sound(SoundEffect.SOUND_EFFECT_TYPE.BUTTON, position)
 
 
-func _on_h_slider_drag_ended(value_changed:bool) -> void:
+func _on_h_slider_drag_ended(_value_changed:bool) -> void:
     AudioManager.play_sound(SoundEffect.SOUND_EFFECT_TYPE.BUTTON, position)
 
 

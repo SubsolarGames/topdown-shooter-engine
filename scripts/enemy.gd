@@ -25,7 +25,12 @@ var prev_delta: float = 0.0
 func _ready() -> void:
 	$nav_update.wait_time = randf_range(0.25, 1.5)
 	$nav_update.start()
+	
 	moveable.speed = randf_range(speed_min, speed_max)
+
+
+func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
+	moveable.accel_direction(safe_velocity, prev_delta)
 
 
 func _process(delta: float) -> void:
@@ -77,5 +82,3 @@ func _on_interest_body_entered(body:Node2D) -> void:
 		target = body.entity
 
 
-func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
-	moveable.accel_direction(safe_velocity, prev_delta)

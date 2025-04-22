@@ -1,6 +1,7 @@
 extends Area2D
 class_name HealthBox
 
+
 signal died
 signal take_damage
 

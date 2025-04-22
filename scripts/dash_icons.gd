@@ -16,11 +16,9 @@ func _process(_delta: float) -> void:
                 i.queue_free()
 
             var inst: Control
-
             for i in range(player_dashes):
                 inst = icon_scene.instantiate()
                 add_child(inst)
-            
             for i in range(Globals.player.max_dashes - player_dashes):
                 inst = empty_scene.instantiate()
                 add_child(inst)

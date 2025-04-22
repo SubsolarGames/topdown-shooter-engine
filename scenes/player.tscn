@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d0k5mnbjggsxq"]
+[gd_scene load_steps=16 format=3 uid="uid://d0k5mnbjggsxq"]
 
 [ext_resource type="PackedScene" uid="uid://cu2l7rfmj5aeb" path="res://scenes/moveable.tscn" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://b4pvms8nymcbx" path="res://scripts/player.gd" id="1_qlg0r"]
@@ -8,7 +8,6 @@
 [ext_resource type="Shader" uid="uid://cmoetrnigluwh" path="res://shaders/white.gdshader" id="5_y4r1p"]
 [ext_resource type="Texture2D" uid="uid://rkqhdehta3av" path="res://assets/player_weak.png" id="6_3v2ag"]
 [ext_resource type="PackedScene" uid="uid://bgp7fiqs72dqk" path="res://scenes/dust_particle.tscn" id="6_tuyoq"]
-[ext_resource type="PackedScene" uid="uid://c47821j3o5p7c" path="res://scenes/spawner.tscn" id="7_fjrip"]
 [ext_resource type="PackedScene" uid="uid://c26lri35mtwbc" path="res://scenes/dash_ghost.tscn" id="8_smehm"]
 [ext_resource type="PackedScene" uid="uid://dx137s8qt5iyj" path="res://scenes/dash_particle.tscn" id="9_ur7pv"]
 [ext_resource type="PackedScene" uid="uid://cyi562wnh0tgw" path="res://scenes/damagebox.tscn" id="12_3v2ag"]
@@ -28,13 +27,13 @@ height = 14.0
 radius = 3.0
 height = 14.0
 
-[node name="player" type="Node2D" node_paths=PackedStringArray("moveable", "animated_character", "dust_particle", "spawner", "dash_particle", "healthbox")]
+[node name="player" type="Node2D" node_paths=PackedStringArray("moveable", "animated_character", "dust_particle", "dash_particle", "healthbox")]
 z_index = 10
 script = ExtResource("1_qlg0r")
 moveable = NodePath("moveable")
 animated_character = NodePath("animated_character")
 dust_particle = NodePath("dust_particle")
-spawner = NodePath("spawner")
+dash_effect_scene = ExtResource("8_smehm")
 dash_particle = NodePath("dash_particle")
 healthbox = NodePath("healthbox")
 normal_texture = ExtResource("3_dqkch")
@@ -91,10 +90,6 @@ hit_sound = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="healthbox"]
 shape = SubResource("CapsuleShape2D_y4r1p")
-
-[node name="spawner" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("7_fjrip")]
-entity = NodePath("..")
-obj = ExtResource("8_smehm")
 
 [node name="spawn_dash_ghost" type="Timer" parent="."]
 wait_time = 0.05
