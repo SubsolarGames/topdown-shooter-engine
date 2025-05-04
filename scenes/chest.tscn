@@ -25,6 +25,9 @@ move_at_start = false
 material = SubResource("ShaderMaterial_yue2o")
 texture = ExtResource("3_gqd3d")
 
+[node name="moveable" parent="." index="1"]
+random_force = false
+
 [node name="text" parent="." index="3"]
 text = "[E] to open"
 

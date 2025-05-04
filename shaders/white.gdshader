@@ -11,8 +11,8 @@ void fragment() {
 	{
 		new_color = white_color;
 	}
-	
+
 	new_color.a = alpha * new_color.a;
-	
+
 	COLOR = new_color;
 }

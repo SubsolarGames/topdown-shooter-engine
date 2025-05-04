@@ -7,9 +7,9 @@ extends Node2D
 
 
 func _ready() -> void:
-    healthbox.died.connect(func():
-        var inst: Node2D = explosion_scene.instantiate()
-        inst.position = position
-        inst.effect_scale = explosion_scale
-        get_parent().add_child(inst)
-    )
+	healthbox.died.connect(func():
+		var inst: Node2D = explosion_scene.instantiate()
+		inst.position = position
+		inst.effect_scale = explosion_scale
+		get_parent().add_child(inst)
+	)

@@ -10,30 +10,30 @@ var active: bool = false
 
 
 func _ready() -> void:
-    if move_at_start:
-        $Sprite2D.rotation_degrees = randf_range(0, 360)
-        rotation_velocity = randf_range(100, 200)
+	if move_at_start:
+		$Sprite2D.rotation_degrees = randf_range(0, 360)
+		rotation_velocity = randf_range(100, 200)
 
 
 func _process(delta: float) -> void:
-    $Sprite2D.rotation_degrees += rotation_velocity * delta
-    rotation_velocity = move_toward(rotation_velocity, 0, 50 * delta)
+	$Sprite2D.rotation_degrees += rotation_velocity * delta
+	rotation_velocity = move_toward(rotation_velocity, 0, 50 * delta)
 
-    $Sprite2D.material.set_shader_parameter("width", 1 * int(active))
-    $text.visible = active
+	$Sprite2D.material.set_shader_parameter("width", 1 * int(active))
+	$text.visible = active
 
-    if active and Input.is_action_just_pressed("interact"):
-        give_item()
-        healthbox.damage(0, 0)
+	if active and Input.is_action_just_pressed("interact"):
+		give_item()
+		healthbox.damage(0, 0)
 
 
 func give_item() -> void:
-    pass
+	pass
 
 
 func _on_area_2d_body_entered(_body:Node2D) -> void:
-    active = true
+	active = true
 
 
 func _on_area_2d_body_exited(_body:Node2D) -> void:
-    active = false
+	active = false

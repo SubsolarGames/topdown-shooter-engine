@@ -7,12 +7,12 @@
 [ext_resource type="Script" uid="uid://coywa67303rrb" path="res://scripts/particles.gd" id="3_aw4cw"]
 [ext_resource type="Texture2D" uid="uid://cnud8rq4sb0re" path="res://assets/circle.png" id="4_hbmxj"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_3el85"]
-radius = 129.402
-
 [sub_resource type="Curve" id="Curve_3el85"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.596398, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3el85"]
+radius = 129.402
 
 [sub_resource type="Animation" id="Animation_hbmxj"]
 length = 0.001
@@ -114,6 +114,28 @@ _data = {
 
 [node name="explosion" type="Node2D"]
 script = ExtResource("1_hbmxj")
+
+[node name="CPUParticles2D4" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 10
+texture = ExtResource("4_hbmxj")
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+angular_velocity_min = 50.0
+angular_velocity_max = 50.0
+damping_min = 600.0
+damping_max = 600.0
+angle_max = 360.0
+scale_amount_min = 0.1
+scale_amount_max = 0.2
+scale_amount_curve = SubResource("Curve_3el85")
+color = Color(0.352941, 0.411765, 0.533333, 1)
+script = ExtResource("3_aw4cw")
+on_start = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0)

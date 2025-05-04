@@ -16,81 +16,132 @@ tile_map_data = PackedByteArray("AAD5/wUAAAAAAAEAAAD5/wYAAAAAAAAAAAD5/wcAAAAAAAA
 [node name="start_pos" parent="." index="1"]
 position = Vector2(-254, -175)
 
-[node name="bomb" parent="." index="2" instance=ExtResource("5_4nkto")]
-position = Vector2(65, 157)
-
-[node name="bomb2" parent="." index="3" instance=ExtResource("5_4nkto")]
-position = Vector2(332, 13)
-
-[node name="bomb3" parent="." index="4" instance=ExtResource("5_4nkto")]
-position = Vector2(336, 33)
-
-[node name="bomb4" parent="." index="5" instance=ExtResource("5_4nkto")]
-position = Vector2(315, 28)
-
-[node name="bomb5" parent="." index="6" instance=ExtResource("5_4nkto")]
-position = Vector2(-191, 84)
-
-[node name="bomb6" parent="." index="7" instance=ExtResource("5_4nkto")]
-position = Vector2(132, -216)
-
-[node name="chest" parent="." index="8" instance=ExtResource("6_fcfvj")]
-position = Vector2(307, 128)
-
-[node name="exit" parent="." index="9"]
+[node name="exit" parent="." index="2"]
 position = Vector2(306, 227)
 
-[node name="chest2" parent="." index="10" instance=ExtResource("6_fcfvj")]
-position = Vector2(318, 156)
-
-[node name="chest3" parent="." index="11" instance=ExtResource("6_fcfvj")]
-position = Vector2(270, 154)
-
-[node name="chest4" parent="." index="12" instance=ExtResource("6_fcfvj")]
-position = Vector2(349, 109)
-
-[node name="chest5" parent="." index="13" instance=ExtResource("6_fcfvj")]
-position = Vector2(270, 101)
-
-[node name="enemy_basic" parent="." index="14" instance=ExtResource("2_bswci")]
-position = Vector2(-100, -24)
-
-[node name="enemy_basic2" parent="." index="15" instance=ExtResource("2_bswci")]
-position = Vector2(-239, -22)
-
-[node name="enemy_basic3" parent="." index="16" instance=ExtResource("2_bswci")]
-position = Vector2(-295, 74)
-
-[node name="enemy_basic4" parent="." index="17" instance=ExtResource("2_bswci")]
-position = Vector2(-164, 15)
-
-[node name="enemy_charger" parent="." index="18" instance=ExtResource("3_5xbjy")]
-position = Vector2(-207, 176)
-
-[node name="enemy_charger2" parent="." index="19" instance=ExtResource("3_5xbjy")]
-position = Vector2(-311, 203)
-
-[node name="enemy_charger3" parent="." index="20" instance=ExtResource("3_5xbjy")]
-position = Vector2(-255, 209)
-
-[node name="enemy_charger4" parent="." index="21" instance=ExtResource("3_5xbjy")]
-position = Vector2(-20, -213)
-
-[node name="enemy_charger5" parent="." index="22" instance=ExtResource("3_5xbjy")]
-position = Vector2(-32, 25)
-
-[node name="enemy_shooter" parent="." index="23" instance=ExtResource("5_fcfvj")]
-position = Vector2(-4, -126)
-
-[node name="enemy_shooter2" parent="." index="24" instance=ExtResource("5_fcfvj")]
-position = Vector2(61, 277)
-
-[node name="enemy_shooter3" parent="." index="25" instance=ExtResource("5_fcfvj")]
-position = Vector2(-56, 280)
-
-[node name="enemy_shooter4" parent="." index="26" instance=ExtResource("5_fcfvj")]
-position = Vector2(3, 188)
-
-[node name="AudioStreamPlayer" parent="." index="27"]
+[node name="AudioStreamPlayer" parent="." index="3"]
 stream = ExtResource("7_pa8r4")
 volume_db = -5.0
+
+[node name="bomb" parent="." index="4" instance=ExtResource("5_4nkto")]
+position = Vector2(67, 171)
+
+[node name="bomb2" parent="." index="5" instance=ExtResource("5_4nkto")]
+position = Vector2(48, 179)
+
+[node name="bomb3" parent="." index="6" instance=ExtResource("5_4nkto")]
+position = Vector2(55, 161)
+
+[node name="bomb4" parent="." index="7" instance=ExtResource("5_4nkto")]
+position = Vector2(35, 166)
+
+[node name="bomb5" parent="." index="8" instance=ExtResource("5_4nkto")]
+position = Vector2(73, 153)
+
+[node name="bomb6" parent="." index="9" instance=ExtResource("5_4nkto")]
+position = Vector2(353, -18)
+
+[node name="bomb7" parent="." index="10" instance=ExtResource("5_4nkto")]
+position = Vector2(-83, 225)
+
+[node name="bomb8" parent="." index="11" instance=ExtResource("5_4nkto")]
+position = Vector2(35, -137)
+
+[node name="bomb9" parent="." index="12" instance=ExtResource("5_4nkto")]
+position = Vector2(35, -157)
+
+[node name="enemy_basic" parent="." index="13" instance=ExtResource("2_bswci")]
+position = Vector2(-9, -121)
+
+[node name="enemy_basic2" parent="." index="14" instance=ExtResource("2_bswci")]
+position = Vector2(-56, -146)
+
+[node name="enemy_basic3" parent="." index="15" instance=ExtResource("2_bswci")]
+position = Vector2(-55, -117)
+
+[node name="enemy_basic4" parent="." index="16" instance=ExtResource("2_bswci")]
+position = Vector2(-14, -160)
+
+[node name="enemy_basic5" parent="." index="17" instance=ExtResource("2_bswci")]
+position = Vector2(-15, 182)
+
+[node name="enemy_basic6" parent="." index="18" instance=ExtResource("2_bswci")]
+position = Vector2(387, -138)
+
+[node name="enemy_basic7" parent="." index="19" instance=ExtResource("2_bswci")]
+position = Vector2(292, -204)
+
+[node name="enemy_basic8" parent="." index="20" instance=ExtResource("2_bswci")]
+position = Vector2(240, -117)
+
+[node name="enemy_basic9" parent="." index="21" instance=ExtResource("2_bswci")]
+position = Vector2(334, -139)
+
+[node name="enemy_basic10" parent="." index="22" instance=ExtResource("2_bswci")]
+position = Vector2(474, 342)
+
+[node name="enemy_basic11" parent="." index="23" instance=ExtResource("2_bswci")]
+position = Vector2(205, 361)
+
+[node name="enemy_basic12" parent="." index="24" instance=ExtResource("2_bswci")]
+position = Vector2(-297, 345)
+
+[node name="enemy_basic13" parent="." index="25" instance=ExtResource("2_bswci")]
+position = Vector2(-302, 213)
+
+[node name="enemy_charger" parent="." index="26" instance=ExtResource("3_5xbjy")]
+position = Vector2(-200, 56)
+
+[node name="enemy_charger2" parent="." index="27" instance=ExtResource("3_5xbjy")]
+position = Vector2(-217, 44)
+
+[node name="enemy_charger3" parent="." index="28" instance=ExtResource("3_5xbjy")]
+position = Vector2(-221, 68)
+
+[node name="enemy_charger4" parent="." index="29" instance=ExtResource("3_5xbjy")]
+position = Vector2(-152, 66)
+
+[node name="enemy_charger5" parent="." index="30" instance=ExtResource("3_5xbjy")]
+position = Vector2(-164, 14)
+
+[node name="enemy_charger6" parent="." index="31" instance=ExtResource("3_5xbjy")]
+position = Vector2(-27, 206)
+
+[node name="enemy_charger7" parent="." index="32" instance=ExtResource("3_5xbjy")]
+position = Vector2(347, 337)
+
+[node name="enemy_charger8" parent="." index="33" instance=ExtResource("3_5xbjy")]
+position = Vector2(456, 158)
+
+[node name="enemy_shooter" parent="." index="34" instance=ExtResource("5_fcfvj")]
+position = Vector2(96, 216)
+
+[node name="enemy_shooter2" parent="." index="35" instance=ExtResource("5_fcfvj")]
+position = Vector2(67, 242)
+
+[node name="enemy_shooter3" parent="." index="36" instance=ExtResource("5_fcfvj")]
+position = Vector2(25, 247)
+
+[node name="enemy_shooter4" parent="." index="37" instance=ExtResource("5_fcfvj")]
+position = Vector2(463, -239)
+
+[node name="enemy_shooter5" parent="." index="38" instance=ExtResource("5_fcfvj")]
+position = Vector2(470, -210)
+
+[node name="enemy_shooter6" parent="." index="39" instance=ExtResource("5_fcfvj")]
+position = Vector2(470, -163)
+
+[node name="enemy_shooter7" parent="." index="40" instance=ExtResource("5_fcfvj")]
+position = Vector2(197, -205)
+
+[node name="enemy_shooter8" parent="." index="41" instance=ExtResource("5_fcfvj")]
+position = Vector2(154, -182)
+
+[node name="chest" parent="." index="42" instance=ExtResource("6_fcfvj")]
+position = Vector2(269, 89)
+
+[node name="chest2" parent="." index="43" instance=ExtResource("6_fcfvj")]
+position = Vector2(-135, 357)
+
+[node name="chest3" parent="." index="44" instance=ExtResource("6_fcfvj")]
+position = Vector2(469, 31)
